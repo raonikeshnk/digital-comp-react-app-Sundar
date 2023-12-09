@@ -8,6 +8,8 @@ import Courses from './components/Courses';
 import Gallery from './components/Gallery';
 import News from './components/News';
 import Staff from './components/Staff';
+import Login from './components/Login';
+import Register from './components/Register';
 
 
 function App() {
@@ -21,7 +23,8 @@ function App() {
         <Route path="/gallery" element={<Gallery />} />
         <Route path="/news" element={<News />} />
         <Route path="/staff" element={<Staff />} />
-
+        <Route path='/login' element={<Login/>} />
+        <Route path='/register' element={<Register/>} />
       </Routes>
     </Router>
   );
