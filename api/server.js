@@ -4,12 +4,18 @@
  app.use(express.json())
  const apiRouter= require('./routers/api')
  const mongoose = require('mongoose')
+ const session = require('express-session')
  mongoose.connect(`${process.env.DB_URL}/${process.env.DB_NAME}`)
 
 
 
 
+app.use(session({
+    secret:process.env.KEY,
+    resave:false,
+    saveUninitialized:false
 
+}))
 
 
 app.use('/api',apiRouter)

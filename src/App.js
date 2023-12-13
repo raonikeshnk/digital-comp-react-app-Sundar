@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Routes, Route, BrowserRouter as Router } from 'react-router-dom'; 
 
 import Index from './components/Home';
@@ -10,12 +10,17 @@ import News from './components/News';
 import Staff from './components/Staff';
 import Login from './components/Login';
 import Register from './components/Register';
-import Dashboard from './components/admin/Dashboard';
+import Profile from './components/user/Profile';
+import { Contextapi } from './components/admin/Contextapi';
+import Admindash from './components/admin/Admindash';
+import Team from './components/admin/Team';
 
 
 function App() {
+  const[loginname ,setLoginname] =useState(localStorage.getItem('loginname'))
   return (
     <Router>
+      <Contextapi.Provider value={{loginname,setLoginname}}>
       <Routes>
         <Route path="/" element={<Index />} />
         <Route path="/about" element={<About />} />
@@ -26,8 +31,13 @@ function App() {
         <Route path="/staff" element={<Staff />} />
         <Route path='/login' element={<Login/>} />
         <Route path='/register' element={<Register/>} />
-        <Route path='/dashboard' element={<Dashboard/>} />
+        <Route path='/profile' element={<Profile/>} />
+        <Route path='/dashboard' element={<Admindash/>} />
+        <Route path='/team' element={<Team/>} />
+
+
       </Routes>
+      </Contextapi.Provider>
     </Router>
   );
 }

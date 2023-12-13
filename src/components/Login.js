@@ -1,9 +1,11 @@
 import Navbar from "../common/Navbar";
 import Footer from "../common/Footer";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useNavigate } from 'react-router-dom';
+import { Contextapi } from "./admin/Contextapi";
 
 function Login() {
+  const{setLoginname} =useContext(Contextapi)
   let navigate = useNavigate('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -17,11 +19,16 @@ function Login() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data)
     }).then((result) => { return result.json() }).then((data) => {
-      console.log(data)
-      if (data.status === 200) {
-        setLogin(data.email)
+      // console.log(data)
+      if (data.status === 200 && data.email==='admin@gmail.com') {
+        localStorage.setItem('loginname',data.email)
+        setLoginname(localStorage.getItem('loginname'))
         navigate('/dashboard')
-      } else {
+      } else if(data.status===200  && data.email!=='admin'){
+        localStorage.setItem('loginname',data.email)
+        setLoginname(localStorage.getItem('loginname'))
+        navigate('/profile')
+      }else{
         setMessage(data.message)
       }
     })
@@ -77,6 +84,9 @@ function Login() {
               <form onSubmit={(e) => { handleForm(e) }}
                 action="#" className="form-box">
                 <div className="row">
+                <div className='col-12 mb-2 text-center text-danger'>
+                  <p >{message}</p>
+                  </div>
                   <div className="col-12 mb-3">
                     <input
                       type="text"
