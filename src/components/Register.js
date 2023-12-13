@@ -7,6 +7,7 @@ function Register() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [repassword, setRepassword] = useState('')
+  const [message,setMessage] =useState('')
   function handleForm(e) {
     e.preventDefault();
     const data = { name, email, password, repassword }
@@ -16,6 +17,11 @@ function Register() {
     body:JSON.stringify(data)
    }).then((result)=>{return result.json()}).then((data)=>{
     console.log(data)
+    if(data.status===201){
+      setMessage(data.message)
+    }else{
+      setMessage(data.message)
+    }
    })
   
     // Add your form submission logic here
@@ -67,6 +73,9 @@ function Register() {
             >
               <form onSubmit={(e) => { handleForm(e) }} action="#" className="form-box">
                 <div className="row">
+                  <div className='col-12 mb-2 text-center text-danger'>
+                  <p >{message}</p>
+                  </div>
                   <div className="col-12 mb-3">
                     <input
                       type="text"
@@ -112,9 +121,11 @@ function Register() {
                       <div className="control__indicator" />
                     </label>
                   </div>
+
                   <div className="col-12">
                     <button type="submit" className="btn btn-primary">
                       Send Message
+
                     </button>
                   </div>
                 </div>

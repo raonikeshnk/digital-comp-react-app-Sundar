@@ -10,6 +10,7 @@ import News from './components/News';
 import Staff from './components/Staff';
 import Login from './components/Login';
 import Register from './components/Register';
+import Dashboard from './components/admin/Dashboard';
 
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
         <Route path="/staff" element={<Staff />} />
         <Route path='/login' element={<Login/>} />
         <Route path='/register' element={<Register/>} />
+        <Route path='/dashboard' element={<Dashboard/>} />
       </Routes>
     </Router>
   );
