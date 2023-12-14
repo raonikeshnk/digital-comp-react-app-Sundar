@@ -1,15 +1,15 @@
-import { useState } from "react";
-import Left from "./common/Left";
-import Navbar from "./common/Navbar";
+
+import React, { useState } from 'react';
+import Left from './common/Left';
+import Navbar from './common/Navbar';
 
 function Addteamform() {
     const [formData, setFormData] = useState({
         fullName: "",
         designation: "",
+        img: null, 
         experience: 0,
     });
-
-    const [message, setMessage] = useState("");
 
     const handleInputChange = (e) => {
         setFormData({
@@ -18,21 +18,29 @@ function Addteamform() {
         });
     };
 
+    const handleFileChange = (e) => {
+        setFormData({
+            ...formData,
+            img: e.target.files[0],
+        });
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         try {
+            const formDataWithFile = new FormData();
+            formDataWithFile.append('fullName', formData.fullName);
+            formDataWithFile.append('designation', formData.designation);
+            formDataWithFile.append('img', formData.img); 
+            formDataWithFile.append('experience', formData.experience);
+
             const response = await fetch("../api/addTeamMember", {
                 method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(formData),
+                body: formDataWithFile, 
             });
 
             const data = await response.json();
-
-            setMessage(data.message);
 
             if (data.success) {
                 console.log("Team member added successfully");
@@ -54,12 +62,8 @@ function Addteamform() {
                         <div className="col-md-9">
                             <div className="container">
                                 <div className="row">
-
                                     <div className="col-md-8">
                                         <h2>Add New Team Member</h2>
-
-                                        <p>{message}</p>
-
                                         <form onSubmit={handleSubmit}>
                                             <label>Full Name:</label>
                                             <input
@@ -77,6 +81,13 @@ function Addteamform() {
                                                 value={formData.designation}
                                                 onChange={handleInputChange}
                                             />
+                                            <label>Profile Picture (Image):</label>
+                                            <input
+                                                type="file"
+                                                className="form-control mb-3"
+                                                name="img"
+                                                onChange={handleFileChange}
+                                            />
                                             <label>Experience:</label>
                                             <input
                                                 type="number"
@@ -91,17 +102,12 @@ function Addteamform() {
                                         </form>
                                     </div>
                                     <div className="col-md-4"></div>
-
                                 </div>
                             </div>
-
                         </div>
-
                     </div>
-
                 </div>
             </section>
-
         </>
     );
 }

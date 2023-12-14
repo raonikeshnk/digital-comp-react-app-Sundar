@@ -2,10 +2,10 @@ const mongoose = require('mongoose')
 
 
 const teamSchema = mongoose.Schema({
-    name: String,
-    profile: String,
+    fullName: String,
+    designation: String,
     img: String,
-    expreience:Number
+    experience:Number
 })
 
 module.exports = mongoose.model('team', teamSchema)
