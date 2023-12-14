@@ -12,22 +12,10 @@ function TeamUpdate() {
   });
 
   useEffect(() => {
-    // Fetch data of the team member by ID when the component mounts
     fetchTeamMemberData();
   }, [id]);
 
-  const fetchTeamMemberData = async () => {
-    try {
-      // Fetch data from your backend API
-      const response = await fetch('../api/getAllTeamMembers');
-      const data = await response.json();
-
-      // Update the state with the fetched data
-      setTeamMember(data);
-    } catch (error) {
-      console.error('Error fetching team data:', error);
-    }
-  };
+ 
 
   const handleUpdate = async () => {
     try {
