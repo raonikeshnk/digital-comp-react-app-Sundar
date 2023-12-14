@@ -17,6 +17,6 @@ app.use(session({
 
 }))
 
-
+app.use('/uploads',express.static('uploads'))
 app.use('/api',apiRouter)
  app.listen( process.env.PORT,()=>{console.log(`server is run start ${process.env.PORT}`)})

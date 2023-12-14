@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Routes, Route, BrowserRouter as Router } from 'react-router-dom'; 
+import { Routes, Route, BrowserRouter as Router } from 'react-router-dom';
 
 import Index from './components/Home';
 import About from './components/About';
@@ -15,31 +15,35 @@ import { Contextapi } from './components/admin/Contextapi';
 import Admindash from './components/admin/Admindash';
 import Team from './components/admin/Team';
 import Addteamform from './components/admin/Addteamform';
+import TeamUpdate from './components/admin/TeamUpdate';
 
 
 function App() {
-  const[loginname ,setLoginname] =useState(localStorage.getItem('loginname'))
+  const [loginname, setLoginname] = useState(localStorage.getItem('loginname'))
   return (
     <Router>
-      <Contextapi.Provider value={{loginname,setLoginname}}>
-      <Routes>
-        <Route path="/" element={<Index />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/courses" element={<Courses />} />
-        <Route path="/gallery" element={<Gallery />} />
-        <Route path="/news" element={<News />} />
-        <Route path="/staff" element={<Staff />} />
-        <Route path='/login' element={<Login/>} />
-        <Route path='/register' element={<Register/>} />
-        <Route path='/profile' element={<Profile/>} />
-        <Route path='/dashboard' element={<Admindash/>} />
-        <Route path='/team' element={<Team/>} />
-        <Route path='/addteam' element={<Addteamform/>} />
+      <Contextapi.Provider value={{ loginname, setLoginname }}>
+        <Routes>
+          <Route path="/" element={<Index />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/courses" element={<Courses />} />
+          <Route path="/gallery" element={<Gallery />} />
+          <Route path="/news" element={<News />} />
+          <Route path="/staff" element={<Staff />} />
+          <Route path='/login' element={<Login />} />
+          <Route path='/register' element={<Register />} />
+          <Route path='/profile' element={<Profile />} />
+          <Route path='/dashboard' element={<Admindash />} />
+          <Route path='/team' element={<Team />} />
+          <Route path='/addteam' element={<Addteamform />} />
+          <Route path="/teamupdate/:id"  element={<TeamUpdate />} />
 
 
 
-      </Routes>
+
+
+        </Routes>
       </Contextapi.Provider>
     </Router>
   );

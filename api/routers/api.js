@@ -6,7 +6,7 @@ const multer = require('multer');
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, 'uploads/'); 
+        cb(null, '../public/uploads/'); 
     },
     filename: function (req, file, cb) {
         cb(null, Date.now() + '-' + file.originalname); 
@@ -20,6 +20,8 @@ router.post('/reg', regc.register)
 router.post('/logincheck', regc.logincheck)
 router.post('/addTeamMember',upload.single('img'), teamc.addTeam)
 router.get('/getAllTeamMembers', teamc.getAllTeamMembers); 
+router.put('/updateTeamMember/:id', upload.single('img'), teamc.updateTeamMember);
+
 
 
 

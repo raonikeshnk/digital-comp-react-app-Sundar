@@ -84,7 +84,7 @@ function Addteamform() {
                                             <label>Profile Picture (Image):</label>
                                             <input
                                                 type="file"
-                                                className="form-control mb-3"
+                                                className="form-control"
                                                 name="img"
                                                 onChange={handleFileChange}
                                             />

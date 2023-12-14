@@ -5,7 +5,7 @@ import Navbar from './common/Navbar';
 
 function Team() {
   const [teamData, setTeamData] = useState([]);
-  
+
   useEffect(() => {
     // Fetch data from the backend API when the component mounts
     fetchTeamData();
@@ -16,7 +16,7 @@ function Team() {
       // Fetch data from your backend API
       const response = await fetch('../api/getAllTeamMembers');
       const data = await response.json();
-      
+
       // Update the state with the fetched data
       setTeamData(data);
     } catch (error) {
@@ -48,17 +48,18 @@ function Team() {
                     <th>Profile</th>
                     <th>Designation</th>
                     <th>Experience</th>
+                    <th> Update</th>
                   </tr>
                 </thead>
                 <tbody>
                   {teamData.map((teamMember, index) => (
                     <tr key={teamMember._id}>
-                      <td>{index+1}</td>
+                      <td>{index + 1}</td>
                       <td>{teamMember.fullName}</td>
                       <td>
                         {teamMember.img && (
                           <img
-                            src={`./uploads/${teamMember.img}`}
+                            src={`${teamMember.img}`}
                             alt={`Profile of ${teamMember.fullName}`}
                             style={{ width: '50px', height: '50px', borderRadius: '50%' }}
                           />
@@ -66,6 +67,9 @@ function Team() {
                       </td>
                       <td>{teamMember.designation}</td>
                       <td>{teamMember.experience}</td>
+                      <td><Link to={`/teamupdate/${teamMember._id}`}>
+                        <button className='btn btn-dark'>Update</button>
+                      </Link></td>
                     </tr>
                   ))}
                 </tbody>
