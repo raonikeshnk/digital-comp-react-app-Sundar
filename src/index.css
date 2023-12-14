@@ -1,5 +1,8 @@
 .dash{
-  margin-top: 100px;
+  margin-top: 5%;
+  padding-top: 3%;
+  background-color: #cfcece;
+  height: 100vh;
 }
 .dash h2{
   text-align: center;

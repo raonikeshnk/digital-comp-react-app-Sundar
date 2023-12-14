@@ -4,7 +4,7 @@ function Left() {
     return ( 
 <>
 <div className="col-md-3"> 
-<Link  to='/team'> <button className="btn btn-info form-control"> Team Management</button></Link>
+<Link  to='/team'> <button className="btn btn-book btn-info"> Team Management</button></Link>
 
 
 

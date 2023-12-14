@@ -5,6 +5,7 @@ const teamc = require('../controllers/teamcontroller')
 
 router.post('/reg', regc.register)
 router.post('/logincheck', regc.logincheck)
+router.post('/addTeamMember', teamc.addTeam)
 
 
 

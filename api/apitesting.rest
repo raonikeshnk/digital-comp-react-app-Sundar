@@ -8,6 +8,7 @@ Content-Type: application/json
     "password":"123",
     "repassword":"123"
 }
+
 ###
 POST http://localhost:5000/api/logincheck
 Content-Type: application/json
@@ -15,4 +16,14 @@ Content-Type: application/json
 {
     "email":"lokesh@gmail.com",
     "password":"1233"
+}
+
+###
+POST http://localhost:5000/api/addTeamMember
+Content-Type: application/json
+
+{
+    "name":"nikesh",
+    "profile":"Manager",
+    "experience":"4"
 }
