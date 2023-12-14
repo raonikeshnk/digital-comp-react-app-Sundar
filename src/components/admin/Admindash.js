@@ -9,7 +9,7 @@ function Admindash() {
             <div className="container"> 
             <div className="row">
                 <Left/>
-                <div className="col-md-8">mid </div>
+                <div className="col-md-8"> </div>
 
             </div>
 

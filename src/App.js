@@ -14,6 +14,7 @@ import Profile from './components/user/Profile';
 import { Contextapi } from './components/admin/Contextapi';
 import Admindash from './components/admin/Admindash';
 import Team from './components/admin/Team';
+import Addteamform from './components/admin/Addteamform';
 
 
 function App() {
@@ -34,6 +35,8 @@ function App() {
         <Route path='/profile' element={<Profile/>} />
         <Route path='/dashboard' element={<Admindash/>} />
         <Route path='/team' element={<Team/>} />
+        <Route path='/addteam' element={<Addteamform/>} />
+
 
 
       </Routes>
