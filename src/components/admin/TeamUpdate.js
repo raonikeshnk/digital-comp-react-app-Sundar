@@ -15,7 +15,25 @@ function TeamUpdate() {
     fetchTeamMemberData();
   }, [id]);
 
- 
+  const fetchTeamMemberData = async () => {
+    try {
+      const response = await fetch(`../api/getTeamMember/${id}`);
+      const data = await response.json();
+
+      if (data.success) {
+        // Update state with fetched data
+        setTeamMember({
+          fullName: data.teamMember.fullName,
+          designation: data.teamMember.designation,
+          experience: data.teamMember.experience,
+        });
+      } else {
+        console.error('Error fetching team member:', data.message);
+      }
+    } catch (error) {
+      console.error('Error fetching team member:', error);
+    }
+  };
 
   const handleUpdate = async () => {
     try {
@@ -51,18 +69,24 @@ function TeamUpdate() {
       [e.target.name]: e.target.value,
     });
   };
+  const handleFileChange = (e) => {
+    setTeamMember({
+      ...teamMember,
+      img: e.target.files[0],
+    });
+  };
 
   return (
     <>
       <Navbar />
       <section className="dash">
-        <div className="container"> 
+        <div className="container">
           <div className="row">
-            <Left/>
+            <Left />
             <div className="col-md-8">
               <h2>Update Team Member</h2>
               {/* Use a form to enable submitting on Enter key */}
-              <form onSubmit={handleUpdate}>
+              <form onSubmit={handleUpdate} encType='multipart/form-data'>
                 <div className="form-group">
                   <label htmlFor="fullName">Full Name</label>
                   <input
@@ -70,7 +94,7 @@ function TeamUpdate() {
                     className="form-control"
                     id="fullName"
                     name="fullName"
-                    value={teamMember.fullName} // Ensure this matches the structure of your data
+                    value={teamMember.fullName}
                     onChange={handleChange}
                   />
                 </div>
@@ -81,7 +105,7 @@ function TeamUpdate() {
                     className="form-control"
                     id="designation"
                     name="designation"
-                    value={teamMember.designation} // Ensure this matches the structure of your data
+                    value={teamMember.designation}
                     onChange={handleChange}
                   />
                 </div>
@@ -92,8 +116,18 @@ function TeamUpdate() {
                     className="form-control"
                     id="experience"
                     name="experience"
-                    value={teamMember.experience} // Ensure this matches the structure of your data
+                    value={teamMember.experience}
                     onChange={handleChange}
+                  />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="img">Profile Image:</label>
+                  <input
+                    type="file"
+                    className="form-control"
+                    id="img"
+                    name="img"
+                    onChange={handleFileChange}
                   />
                 </div>
                 {/* Use type="submit" to allow submitting the form */}
