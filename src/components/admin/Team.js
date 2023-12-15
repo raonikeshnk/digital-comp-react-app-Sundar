@@ -23,6 +23,26 @@ function Team() {
       console.error('Error fetching team data:', error);
     }
   };
+  const handleDelete = async (id) => {
+    try {
+      const response = await fetch(`../api/deleteTeamMember/${id}`, {
+        method: 'DELETE',
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        console.log('Team member deleted successfully');
+        // Reload the team data after deletion
+        fetchTeamData();
+      } else {
+        console.error('Error deleting team member:', data.message);
+      }
+    } catch (error) {
+      console.error('Error deleting team member:', error);
+    }
+  };
+
 
   return (
     <>
@@ -49,6 +69,7 @@ function Team() {
                     <th>Designation</th>
                     <th>Experience</th>
                     <th> Update</th>
+                    <th>Delete</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -59,17 +80,26 @@ function Team() {
                       <td>
                         {teamMember.img && (
                           <img
-                            src={`${teamMember.img}`}
+                            src={`uploads/${teamMember.img}`}
                             alt={`Profile of ${teamMember.fullName}`}
                             style={{ width: '50px', height: '50px', borderRadius: '50%' }}
                           />
                         )}
                       </td>
                       <td>{teamMember.designation}</td>
-                      <td>{teamMember.experience}</td>
+                      <td>{teamMember.experience} Years</td>
                       <td><Link to={`/teamupdate/${teamMember._id}`}>
                         <button className='btn btn-dark'>Update</button>
-                      </Link></td>
+                      </Link>
+                      </td>
+                      <td>
+                        <button
+                          className='btn btn-danger'
+                          onClick={() => handleDelete(teamMember._id)}
+                        >
+                          Delete
+                        </button>
+                      </td>
                     </tr>
                   ))}
                 </tbody>

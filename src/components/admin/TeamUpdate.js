@@ -1,61 +1,65 @@
-import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import Left from "./common/Left";
-import Navbar from "./common/Navbar";
+import React, { useState, useEffect, useCallback } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import Left from './common/Left';
+import Navbar from './common/Navbar';
 
 function TeamUpdate() {
+  const navigate = useNavigate();
   const { id } = useParams();
   const [teamMember, setTeamMember] = useState({
     fullName: '',
     designation: '',
     experience: '',
+    img: null,
   });
-
-  useEffect(() => {
-    fetchTeamMemberData();
-  }, [id]);
-
-  const fetchTeamMemberData = async () => {
+  const fetchTeamMemberData = useCallback(async () => {
     try {
       const response = await fetch(`../api/getTeamMember/${id}`);
       const data = await response.json();
 
-      if (data.success) {
-        // Update state with fetched data
-        setTeamMember({
-          fullName: data.teamMember.fullName,
-          designation: data.teamMember.designation,
-          experience: data.teamMember.experience,
-        });
+      if (response.ok) {
+        setTeamMember(data.teamMember);
       } else {
-        console.error('Error fetching team member:', data.message);
+        console.error('Error fetching team member data:', data.message);
       }
     } catch (error) {
-      console.error('Error fetching team member:', error);
+      console.error('Error fetching team member data:', error);
     }
-  };
+  }, [id]);
 
-  const handleUpdate = async () => {
+  useEffect(() => {
+    fetchTeamMemberData();
+  }, [fetchTeamMemberData]);
+
+  
+
+  const handleUpdate = async (e) => {
+    e.preventDefault();
+
     try {
+      const formData = new FormData();
+      formData.append('fullName', teamMember.fullName);
+      formData.append('designation', teamMember.designation);
+      formData.append('experience', teamMember.experience);
+
+      if (teamMember.img instanceof File) {
+        formData.append('img', teamMember.img);
+      }
+
+      // formData.append('img', teamMember.img);
+      console.log('FormData:', formData);
+
       const response = await fetch(`../api/updateTeamMember/${id}`, {
         method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          fullName: teamMember.fullName,
-          designation: teamMember.designation,
-          experience: teamMember.experience,
-        }),
+        body: formData,
       });
 
       const data = await response.json();
 
       if (data.success) {
-        // Update successful, you may want to redirect or show a success message
         console.log('Team member updated successfully');
+        navigate('/team');
       } else {
-        // Handle the case where the update was not successful
         console.error('Error updating team member:', data.message);
       }
     } catch (error) {
@@ -69,6 +73,7 @@ function TeamUpdate() {
       [e.target.name]: e.target.value,
     });
   };
+
   const handleFileChange = (e) => {
     setTeamMember({
       ...teamMember,
@@ -85,8 +90,7 @@ function TeamUpdate() {
             <Left />
             <div className="col-md-8">
               <h2>Update Team Member</h2>
-              {/* Use a form to enable submitting on Enter key */}
-              <form onSubmit={handleUpdate} encType='multipart/form-data'>
+              <form onSubmit={handleUpdate}>
                 <div className="form-group">
                   <label htmlFor="fullName">Full Name</label>
                   <input
@@ -121,16 +125,21 @@ function TeamUpdate() {
                   />
                 </div>
                 <div className="form-group">
-                  <label htmlFor="img">Profile Image:</label>
+                  <label htmlFor="img">Profile Image</label>
                   <input
                     type="file"
-                    className="form-control"
+                    className="form-control-file"
                     id="img"
                     name="img"
                     onChange={handleFileChange}
                   />
+                    <img
+                      src={`../uploads/${teamMember.img}`}
+                      alt={`Profile of ${teamMember.fullName}`}
+                      style={{ width: '60px', height: '60px', borderRadius: '50%' }}
+                    />
+                  
                 </div>
-                {/* Use type="submit" to allow submitting the form */}
                 <button type="submit" className="btn btn-primary">
                   Update
                 </button>

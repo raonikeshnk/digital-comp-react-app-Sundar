@@ -22,6 +22,7 @@ router.post('/addTeamMember',upload.single('img'), teamc.addTeam)
 router.get('/getAllTeamMembers', teamc.getAllTeamMembers); 
 router.put('/updateTeamMember/:id', upload.single('img'), teamc.updateTeamMember);
 router.get('/getTeamMember/:id', teamc.getTeamMember);
+router.delete('/deleteTeamMember/:id', teamc.deleteTeamMember);
 
 
 

@@ -69,3 +69,18 @@ exports.getTeamMember = async (req, res) => {
     res.status(500).json({ success: false, message: 'Internal server error' });
   }
 };
+// Delete a team member
+exports.deleteTeamMember = async (req, res) => {
+  try {
+    const teamMember = await Team.findByIdAndDelete(req.params.id);
+
+    if (!teamMember) {
+      return res.status(404).json({ success: false, message: 'Team member not found' });
+    }
+
+    res.json({ success: true, message: 'Team member deleted successfully' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, message: 'Internal server error' });
+  }
+};

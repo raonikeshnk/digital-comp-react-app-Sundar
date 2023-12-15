@@ -1,9 +1,11 @@
 
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';  
 import Left from './common/Left';
 import Navbar from './common/Navbar';
 
 function Addteamform() {
+    const navigate = useNavigate(); 
     const [formData, setFormData] = useState({
         fullName: "",
         designation: "",
@@ -44,6 +46,7 @@ function Addteamform() {
 
             if (data.success) {
                 console.log("Team member added successfully");
+                navigate('/team');
             } else {
                 console.error("Failed to add team member");
             }
