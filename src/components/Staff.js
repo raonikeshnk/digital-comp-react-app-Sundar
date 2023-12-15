@@ -1,7 +1,29 @@
+import React, { useState, useEffect } from 'react';
 import Navbar from '../common/Navbar';
 import Footer from '../common/Footer';
 
 function Staff() {
+  const [teamData, setTeamData] = useState([]);
+
+  useEffect(() => {
+    // Fetch data from the backend API when the component mounts
+    fetchTeamData();
+  }, []);
+
+  const fetchTeamData = async () => {
+    try {
+      // Fetch data from your backend API
+      const response = await fetch('../api/getAllTeamMembers');
+      const data = await response.json();
+
+      // Update the state with the fetched data
+      setTeamData(data);
+    } catch (error) {
+      console.error('Error fetching team data:', error);
+    }
+  };
+
+
     return ( 
         <>
   <div className="site-mobile-menu">
@@ -55,181 +77,25 @@ function Staff() {
   <div className="untree_co-section bg-light">
     <div className="container">
       <div className="row">
+      {teamData.map((teamMember) => (
         <div
+          key={teamMember._id}
           className="col-12 col-sm-6 col-md-6 mb-4 mb-lg-0 col-lg-4"
           data-aos="fade-up"
           data-aos-delay={0}
         >
           <div className="staff text-center">
             <div className="mb-4">
-              <img src="images/staff_2.jpg" alt="Image" className="img-fluid" />
+            <img src = {`../uploads/${teamMember.img}`} alt={teamMember.img} className="img-fluid" width={`150px`} height={`150px`} />
             </div>
             <div className="staff-body">
-              <h3 className="staff-name">Ramavtar Yadav</h3>
-              <span className="d-block position mb-4">CEO</span>
+              <h3 className="staff-name">{teamMember.fullName}</h3>
+              <span className="d-block position ">{teamMember.designation}</span>
+              <span className="d-block position mb-4">{teamMember.experience} Year</span>
             </div>
           </div>
         </div>
-        <div
-          className="col-12 col-sm-6 col-md-6 mb-4 mb-lg-0 col-lg-4"
-          data-aos="fade-up"
-          data-aos-delay={100}
-        >
-          <div className="staff text-center">
-            <div className="mb-4">
-              <img
-                src="images/staff/pushpendra.png"
-                alt="Image"
-                className="img-fluid"
-              />
-            </div>
-            <div className="staff-body">
-              <h3 className="staff-name">Pushpendra Kumar Yadav</h3>
-              <span className="d-block position mb-4">Managing Director</span>
-            </div>
-          </div>
-        </div>
-        <div
-          className="col-12 col-sm-6 col-md-6 mb-4 mb-lg-0 col-lg-4"
-          data-aos="fade-up"
-          data-aos-delay={200}
-        >
-          <div className="staff text-center">
-            <div className="mb-4">
-              <img
-                src="images/staff/ashok-kumar.png"
-                alt="Image"
-                className="img-fluid"
-              />
-            </div>
-            <div className="staff-body">
-              <h3 className="staff-name">Ashok Kumar</h3>
-              <span className="d-block position mb-4">
-                Ethical Hacking Expert
-              </span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="row">
-        <div
-          className="col-12 col-sm-6 col-md-6 mb-4 mb-lg-0 col-lg-4"
-          data-aos="fade-up"
-          data-aos-delay={0}
-        >
-          <div className="staff text-center">
-            <div className="mb-4">
-              <img
-                src="images/staff/antiksha.png"
-                alt="Image"
-                className="img-fluid"
-              />
-            </div>
-            <div className="staff-body">
-              <h3 className="staff-name">Antiksha Swami</h3>
-              <span className="d-block position mb-4">Legal Advisor</span>
-            </div>
-          </div>
-        </div>
-        <div
-          className="col-12 col-sm-6 col-md-6 mb-4 mb-lg-0 col-lg-4"
-          data-aos="fade-up"
-          data-aos-delay={100}
-        >
-          <div className="staff text-center">
-            <div className="mb-4">
-              <img
-                src="images/staff/mk-yadav.png"
-                alt="Image"
-                className="img-fluid"
-              />
-            </div>
-            <div className="staff-body">
-              <h3 className="staff-name">M.K. Yadav</h3>
-              <span className="d-block position mb-4">App Developer</span>
-            </div>
-          </div>
-        </div>
-        <div
-          className="col-12 col-sm-6 col-md-6 mb-4 mb-lg-0 col-lg-4"
-          data-aos="fade-up"
-          data-aos-delay={200}
-        >
-          <div className="staff text-center">
-            <div className="mb-4">
-              <img
-                src="images/staff/surender.png"
-                alt="Image"
-                className="img-fluid"
-              />
-            </div>
-            <div className="staff-body">
-              <h3 className="staff-name">Surender Yadav</h3>
-              <span className="d-block position mb-4">Accountant</span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="row">
-        <div
-          className="col-12 col-sm-6 col-md-6 mb-4 mb-lg-0 col-lg-4"
-          data-aos="fade-up"
-          data-aos-delay={0}
-        >
-          <div className="staff text-center">
-            <div className="mb-4">
-              <img
-                src="images/staff/krishan.png"
-                alt="Image"
-                className="img-fluid"
-              />
-            </div>
-            <div className="staff-body">
-              <h3 className="staff-name">Krishan Yadav</h3>
-              <span className="d-block position mb-4">
-                6<sup>th</sup> to 12<sup>th</sup> Math Specialist
-              </span>
-            </div>
-          </div>
-        </div>
-        <div
-          className="col-12 col-sm-6 col-md-6 mb-4 mb-lg-0 col-lg-4"
-          data-aos="fade-up"
-          data-aos-delay={100}
-        >
-          <div className="staff text-center">
-            <div className="mb-4">
-              <img
-                src="images/staff/ashok.png"
-                alt="Image"
-                className="img-fluid"
-              />
-            </div>
-            <div className="staff-body">
-              <h3 className="staff-name">Ashok Kumawat</h3>
-              <span className="d-block position mb-4">Tally Expert</span>
-            </div>
-          </div>
-        </div>
-        <div
-          className="col-12 col-sm-6 col-md-6 mb-4 mb-lg-0 col-lg-4"
-          data-aos="fade-up"
-          data-aos-delay={200}
-        >
-          <div className="staff text-center">
-            <div className="mb-4">
-              <img
-                src="images/staff/praveen.png"
-                alt="Image"
-                className="img-fluid"
-              />
-            </div>
-            <div className="staff-body">
-              <h3 className="staff-name">Praveen Yadav</h3>
-              <span className="d-block position mb-4">Rs-cit Tutor</span>
-            </div>
-          </div>
-        </div>
+      ))}
       </div>
     </div>
   </div>{" "}
