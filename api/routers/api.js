@@ -1,6 +1,7 @@
 const router = require('express').Router()
 const regc = require('../controllers/regcontroller')
 const teamc = require('../controllers/teamcontroller')
+ const photoc=   require('../controllers/photocontroller')
 const multer = require('multer');
 
 
