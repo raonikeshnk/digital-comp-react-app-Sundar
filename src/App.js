@@ -16,8 +16,7 @@ import Admindash from './components/admin/Admindash';
 import Team from './components/admin/Team';
 import Addteamform from './components/admin/Addteamform';
 import TeamUpdate from './components/admin/TeamUpdate';
-import Photo from './components/admin/Photo';
-import Addphoto from './components/admin/Addphoto';
+import GalleryMngt from './components/admin/GalleryMngt';
 
 function App() {
   const [loginname, setLoginname] = useState(localStorage.getItem('loginname'))
@@ -39,8 +38,7 @@ function App() {
           <Route path='/team' element={<Team />} />
           <Route path='/addteam' element={<Addteamform />} />
           <Route path="/teamupdate/:id"  element={<TeamUpdate />} />
-          <Route path="/photo"  element={<Photo/>} />
-          <Route path="/addphoto"  element={<Addphoto/>} />
+          <Route path="/gallerymngt"  element={<GalleryMngt/>} />
 
 
 

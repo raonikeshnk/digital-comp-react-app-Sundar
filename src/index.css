@@ -8,3 +8,21 @@
   text-align: center;
   color: red;
 }
+.image-container {
+  position: relative;
+  display: inline-block;
+  margin-right: 10px;
+}
+
+.image-container img {
+  max-width: 100px;
+}
+
+.image-container span {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  font-size: 18px;
+  color: red;
+  cursor: pointer;
+}
