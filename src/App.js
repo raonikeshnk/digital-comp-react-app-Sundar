@@ -38,8 +38,7 @@ function App() {
           <Route path='/team' element={<Team />} />
           <Route path='/addteam' element={<Addteamform />} />
           <Route path="/teamupdate/:id"  element={<TeamUpdate />} />
-          <Route path="/gallerymngt"  element={<GalleryMngt/>} />
-
+          <Route path="/gallerymngt"  element={<GalleryMngt />} />
 
 
 

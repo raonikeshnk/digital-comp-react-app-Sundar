@@ -1,90 +1,146 @@
-import React, { useState } from 'react';
-import Left from './common/Left';
-import Navbar from './common/Navbar';
+import React, { useState, useEffect } from 'react';
+import Left from "./common/Left";
+import Navbar from "./common/Navbar";
 
 function GalleryMngt() {
-    const [selectedImages, setSelectedImages] = useState([]);
-    const [imagePreviews, setImagePreviews] = useState([]);
+  const [photos, setPhotos] = useState([]);
+  const [selectedFiles, setSelectedFiles] = useState([]);
 
-    const handleImageChange = (e) => {
-        const files = Array.from(e.target.files);
+  useEffect(() => {
+    // Fetch photos when the component mounts
+    fetchPhotos();
+  }, []);
 
-        if (selectedImages.length + files.length > 5) {
-            alert('You can upload up to 5 images.');
-            return;
-        }
+  const fetchPhotos = async () => {
+    try {
+      const response = await fetch('/api/getAllPhotos');
+      const data = await response.json();
+      setPhotos(data);
+    } catch (error) {
+      console.error('Error fetching photos:', error);
+    }
+  };
 
-        setSelectedImages([...selectedImages, ...files]);
-        const previews = files.map((file) => URL.createObjectURL(file));
-        setImagePreviews([...imagePreviews, ...previews]);
-    };
+  const handleFileChange = (e) => {
+    setSelectedFiles(e.target.files);
+  };
 
-    const handleImageRemove = (index) => {
-        const updatedImages = [...selectedImages];
-        const updatedPreviews = [...imagePreviews];
-        updatedImages.splice(index, 1);
-        updatedPreviews.splice(index, 1);
+  const handleUpload = async () => {
+    if (!selectedFiles || selectedFiles.length === 0) {
+      console.error('Please select one or more files to upload');
+      return;
+    }
 
-        setSelectedImages(updatedImages);
-        setImagePreviews(updatedPreviews);
-    };
+    const formData = new FormData();
 
-    const handleUpload = async () => {
-        try {
-            const formData = new FormData();
-            selectedImages.forEach((image) => {
-                formData.append('photos', image);
-            });
+    // Append each selected file to the FormData
+    for (let i = 0; i < selectedFiles.length; i++) {
+      formData.append('photos', selectedFiles[i]);
+    }
 
-            const response = await fetch('http://localhost:3000/api/addPhoto', {
-                method: 'POST',
-                body: formData,
-            });
+    try {
+      const response = await fetch('../api/addPhotos', {
+        method: 'POST',
+        body: formData,
+      });
 
-            const result = await response.json();
+      const data = await response.json();
 
-            if (result.success) {
-                // Clear the selected images and previews after successful upload
-                setSelectedImages([]);
-                setImagePreviews([]);
-                alert('Photos added successfully!');
-            } else {
-                alert('Error uploading photos.');
-            }
-        } catch (error) {
-            console.error(error);
-            alert('Internal server error');
-        }
-    };
+      if (data.success) {
+        console.log('Photos uploaded successfully');
+        // Reload the gallery after upload
+        fetchPhotos();
+      } else {
+        console.error('Error uploading photos:', data.error);
+      }
+    } catch (error) {
+      console.error('Error uploading photos:', error);
+    }
+  };
 
-    return (
-        <>
-            <Navbar />
-            <section className="dash">
-                <div className="container">
-                    <div className="row">
-                        <Left />
-                        <div className="col-md-8">
-                            <h2>Photo Management</h2>
-                            <form encType="multipart/form-data">
-                                <label>Photos</label>
-                                <input type="file" className="" onChange={handleImageChange} multiple />
-                                {imagePreviews.map((preview, index) => (
-                                    <div key={index} className="image-container">
-                                        <img src={preview} alt={`Preview ${index + 1}`} />
-                                        <span onClick={() => handleImageRemove(index)}>&times;</span>
-                                    </div>
-                                ))}
-                                <button type="button" className="btn btn-success mt-3" onClick={handleUpload}>
-                                    Add
-                                </button>
-                            </form>
-                        </div>
-                    </div>
+
+  const handleDelete = async (photoId) => {
+    try {
+      const response = await fetch(`/api/deletePhoto/${photoId}`, {
+        method: 'DELETE',
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        console.log('Photo deleted successfully');
+        // Reload the gallery after delete
+        fetchPhotos();
+      } else {
+        console.error('Error deleting photo:', data.error);
+      }
+    } catch (error) {
+      console.error('Error deleting photo:', error);
+    }
+  };
+
+  return (
+    <>
+      <Navbar />
+      <section className="dash">
+        <div className="container">
+          <div className="row">
+            <Left />
+            <div className="col-md-8">
+              <div>
+                <h2>Gallery</h2>
+
+                {/* Image Upload Form */}
+                <div className="upload-form row">
+
+                  <input
+                    type="file"
+                    accept="image/*"
+                    className="p-3 col-6"
+                    multiple
+                    onChange={handleFileChange}
+                  />
+                  <button
+                    className=" btn-success px-5 py-3 col-6"
+                    onClick={handleUpload}
+                  >
+                    Upload
+                  </button>
                 </div>
-            </section>
-        </>
-    );
+
+                {/* Display Gallery */}
+                <div className="gallery-grid">
+                  {photos.map((photo) => (
+                    <div key={photo._id} className="gallery-item">
+                      {photo.filename ? (
+                        <>
+                          <img
+                            src={`/uploads/${photo.filename}`}
+                            alt={`Gallery ${photo._id}`}
+                            className="img-fluid"
+                          />
+                          <div className="delete-button-container">
+                            <button
+                              className="btn btn-danger delete-button p-1"
+                              onClick={() => handleDelete(photo._id)}
+                            >
+                              X
+                            </button>
+                          </div>
+                        </>
+                      ) : (
+                        <p>Image not found</p>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </>
+  );
 }
 
 export default GalleryMngt;

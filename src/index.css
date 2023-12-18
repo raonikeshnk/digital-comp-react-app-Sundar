@@ -2,27 +2,58 @@
   margin-top: 5%;
   padding-top: 3%;
   background-color: #cfcece;
-  height: 100vh;
+  height: 100%;
 }
 .dash h2{
   text-align: center;
   color: red;
 }
-.image-container {
+.upload-form {
+  margin: 40px 0;
+  /* border: 1px solid black; */
+  background-color: #fff;
+}
+
+
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 10px;
   position: relative;
-  display: inline-block;
-  margin-right: 10px;
 }
 
-.image-container img {
-  max-width: 100px;
+.gallery-item {
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.image-container span {
+.gallery-item img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 8px;
+}
+
+.gallery-item p {
+  text-align: center;
+  padding: 20px;
+  margin: 0;
+}
+.gallery-item {
+  position: relative;
+}
+
+.delete-button-container {
   position: absolute;
-  top: 5px;
-  right: 5px;
-  font-size: 18px;
-  color: red;
-  cursor: pointer;
+  top: 0;
+  right: 0;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.gallery-item:hover .delete-button-container {
+  opacity: 1;
 }
