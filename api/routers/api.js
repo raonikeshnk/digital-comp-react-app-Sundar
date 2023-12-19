@@ -33,6 +33,10 @@ router.post('/addPhotos', upload.array('photos', 20), photoc.addPhotos);
 router.get('/getAllPhotos', photoc.getAllPhotos);
 router.delete('/deletePhoto/:id', photoc.deletePhoto); 
 router.delete('/deleteAllPhotos', photoc.deleteAllPhotos); 
-
+router.get('/about', aboutc.getAboutData);
+router.put('/updateabout', upload.fields([
+    { name: 'missionImage', maxCount: 1 },
+    { name: 'visionImage', maxCount: 1 },
+  ]), aboutc.updateAboutData);
 
 module.exports = router

@@ -2,9 +2,9 @@ const mongoose = require('mongoose');
 
 const aboutSchema = new mongoose.Schema({
     mission: String,
-    missionimg: String,
-    vission: String,
-    vissionimg: String
+    missionImage: String,
+    vision: String,
+    visionImage: String
 });
 
 const About = mongoose.model('About', aboutSchema);
