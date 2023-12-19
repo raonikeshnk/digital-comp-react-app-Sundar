@@ -1,7 +1,25 @@
+import React, { useState, useEffect } from 'react';
 import Navbar from "../common/Navbar";
 import Footer from "../common/Footer";
 
 function Gallery() {
+  const [photos, setPhotos] = useState([]);
+
+  useEffect(() => {
+    fetchPhotos();
+  }, []);
+
+  const fetchPhotos = async () => {
+    try {
+      const response = await fetch('/api/getAllPhotos');
+      const data = await response.json();
+      setPhotos(data);
+    } catch (error) {
+      console.error('Error fetching photos:', error);
+    }
+  };
+
+
     return ( 
         <>
   <div className="site-mobile-menu">
@@ -53,204 +71,25 @@ function Gallery() {
   {/* /.untree_co-hero */}
   <div className="untree_co-section">
     <div className="container">
-      <div className="row">
-        <div className="col-md-6 col-lg-4 item">
-          <a
-            href="images/gallery/gallery-1.jpg"
-            className="item-wrap fancybox mb-4"
-            data-fancybox="gal"
-            data-aos="fade-up"
-            data-aos-delay={0}
-          >
-            <span className="icon-search2" />
-            <img className="img-fluid" src="images/gallery/gallery-1.jpg" alt="gallery image" />
-          </a>
-          <a
-            href="images/gallery/gallery-2.jpg"
-            className="item-wrap fancybox mb-4"
-            data-fancybox="gal"
-            data-aos="fade-up"
-            data-aos-delay={0}
-          >
-            <span className="icon-search2" />
-            <img className="img-fluid" src="images/gallery/gallery-2.jpg" />
-          </a>
-          <a
-            href="images/gallery/gallery-3.jpg"
-            className="item-wrap fancybox mb-4"
-            data-fancybox="gal"
-            data-aos="fade-up"
-            data-aos-delay={0}
-          >
-            <span className="icon-search2" />
-            <img className="img-fluid" src="images/gallery/gallery-3.jpg" />
-          </a>
-          <a
-            href="images/gallery/gallery-4.jpg"
-            className="item-wrap fancybox mb-4"
-            data-fancybox="gal"
-            data-aos="fade-up"
-            data-aos-delay={0}
-          >
-            <span className="icon-search2" />
-            <img className="img-fluid" src="images/gallery/gallery-4.jpg" />
-          </a>
-          <a
-            href="images/gallery/gallery-5.jpg"
-            className="item-wrap fancybox mb-4"
-            data-fancybox="gal"
-            data-aos="fade-up"
-            data-aos-delay={0}
-          >
-            <span className="icon-search2" />
-            <img className="img-fluid" src="images/gallery/gallery-5.jpg" />
-          </a>
-          <a
-            href="images/gallery/gallery-6.jpg"
-            className="item-wrap fancybox mb-4"
-            data-fancybox="gal"
-            data-aos="fade-up"
-            data-aos-delay={0}
-          >
-            <span className="icon-search2" />
-            <img className="img-fluid" src="images/gallery/gallery-6.jpg" />
-          </a>
+    <div className="row">
+          {photos.map((photo) => (
+            <div key={photo._id} className="col-md-3 mb-4">
+              <a
+                href={`/uploads/${photo.filename}`}
+                className="item-wrap fancybox"
+                data-fancybox="gal"
+              >
+                <img
+                  className="img-fluid"
+                  style={{ width: '200px', height: '200px', objectFit: 'cover' }}
+                  src={`/uploads/${photo.filename}`}
+                  alt={`Gallery ${photo._id}`}
+                />
+              </a>
+            </div>
+          ))}
         </div>
-        <div className="col-md-6 col-lg-4 item">
-          <a
-            href="images/gallery/gallery-7.jpg"
-            className="item-wrap fancybox mb-4"
-            data-fancybox="gal"
-            data-aos="fade-up"
-            data-aos-delay={0}
-          >
-            <span className="icon-search2" />
-            <img className="img-fluid" src="images/gallery/gallery-7.jpg" />
-          </a>
-          <a
-            href="images/gallery/gallery-8.jpg"
-            className="item-wrap fancybox mb-4"
-            data-fancybox="gal"
-            data-aos="fade-up"
-            data-aos-delay={0}
-          >
-            <span className="icon-search2" />
-            <img className="img-fluid" src="images/gallery/gallery-8.jpg" />
-          </a>
-          <a
-            href="images/gallery/gallery-9.jpg"
-            className="item-wrap fancybox mb-4"
-            data-fancybox="gal"
-            data-aos="fade-up"
-            data-aos-delay={0}
-          >
-            <span className="icon-search2" />
-            <img className="img-fluid" src="images/gallery/gallery-9.jpg" />
-          </a>
-          <a
-            href="images/gallery/gallery-10.jpg"
-            className="item-wrap fancybox mb-4"
-            data-fancybox="gal"
-            data-aos="fade-up"
-            data-aos-delay={0}
-          >
-            <span className="icon-search2" />
-            <img className="img-fluid" src="images/gallery/gallery-10.jpg" />
-          </a>
-          <a
-            href="images/gallery/gallery-11.jpg"
-            className="item-wrap fancybox mb-4"
-            data-fancybox="gal"
-            data-aos="fade-up"
-            data-aos-delay={0}
-          >
-            <span className="icon-search2" />
-            <img className="img-fluid" src="images/gallery/gallery-11.jpg" />
-          </a>
-          <a
-            href="images/gallery/gallery-13.jpg"
-            className="item-wrap fancybox mb-4"
-            data-fancybox="gal"
-            data-aos="fade-up"
-            data-aos-delay={0}
-          >
-            <span className="icon-search2" />
-            <img className="img-fluid" src="images/gallery/gallery-13.jpg" />
-          </a>
-        </div>
-        <div className="col-md-6 col-lg-4 item">
-          <a
-            href="images/gallery/gallery-12.jpg"
-            className="item-wrap fancybox mb-4"
-            data-fancybox="gal"
-            data-aos="fade-up"
-            data-aos-delay={0}
-          >
-            <span className="icon-search2" />
-            <img className="img-fluid" src="images/gallery/gallery-12.jpg" />
-          </a>
-          <a
-            href="images/gallery/gallery-14.jpg"
-            className="item-wrap fancybox mb-4"
-            data-fancybox="gal"
-            data-aos="fade-up"
-            data-aos-delay={0}
-          >
-            <span className="icon-search2" />
-            <img className="img-fluid" src="images/gallery/gallery-14.jpg" />
-          </a>
-          <a
-            href="images/gallery/gallery-15.jpg"
-            className="item-wrap fancybox mb-4"
-            data-fancybox="gal"
-            data-aos="fade-up"
-            data-aos-delay={0}
-          >
-            <span className="icon-search2" />
-            <img className="img-fluid" src="images/gallery/gallery-15.jpg" />
-          </a>
-          <a
-            href="images/gallery/gallery-16.jpg"
-            className="item-wrap fancybox mb-4"
-            data-fancybox="gal"
-            data-aos="fade-up"
-            data-aos-delay={0}
-          >
-            <span className="icon-search2" />
-            <img className="img-fluid" src="images/gallery/gallery-16.jpg" />
-          </a>
-          <a
-            href="images/gallery/gallery-17.jpg"
-            className="item-wrap fancybox mb-4"
-            data-fancybox="gal"
-            data-aos="fade-up"
-            data-aos-delay={0}
-          >
-            <span className="icon-search2" />
-            <img className="img-fluid" src="images/gallery/gallery-17.jpg" />
-          </a>
-          <a
-            href="images/gallery/gallery-18.jpg"
-            className="item-wrap fancybox mb-4"
-            data-fancybox="gal"
-            data-aos="fade-up"
-            data-aos-delay={0}
-          >
-            <span className="icon-search2" />
-            <img className="img-fluid" src="images/gallery/gallery-18.jpg" />
-          </a>
-          <a
-            href="images/gallery/gallery-19.jpg"
-            className="item-wrap fancybox mb-4"
-            data-fancybox="gal"
-            data-aos="fade-up"
-            data-aos-delay={0}
-          >
-            <span className="icon-search2" />
-            <img className="img-fluid" src="images/gallery/gallery-19.jpg" />
-          </a>
-        </div>
-      </div>
+
     </div>
   </div>
   {/* /.untree_co-section */}

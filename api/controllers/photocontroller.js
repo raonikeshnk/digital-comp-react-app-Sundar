@@ -46,3 +46,15 @@ exports.deletePhoto = async (req, res) => {
     res.status(500).json({ success: false, message: 'Internal server error' });
   }
 };
+
+exports.deleteAllPhotos = async (req, res) => {
+  try {
+    // Delete all photos
+    const result = await Photo.deleteMany({});
+
+    res.json({ success: true, message: 'All photos deleted successfully' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, message: 'Internal server error' });
+  }
+};

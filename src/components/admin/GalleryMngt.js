@@ -78,6 +78,34 @@ function GalleryMngt() {
       console.error('Error deleting photo:', error);
     }
   };
+  const handleDeleteAll = async () => {
+    // Display a confirmation prompt
+    const shouldDeleteAll = window.confirm(
+      'Are you sure you want to delete all photos?'
+    );
+
+    if (!shouldDeleteAll) {
+      return;
+    }
+
+    try {
+      const response = await fetch(`../api/deleteAllPhotos`, {
+        method: 'DELETE',
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        console.log('All photos deleted successfully');
+        // Reload the gallery after deletion
+        fetchPhotos();
+      } else {
+        console.error('Error deleting all photos:', data.error);
+      }
+    } catch (error) {
+      console.error('Error deleting all photos:', error);
+    }
+  };
 
   return (
     <>
@@ -107,6 +135,12 @@ function GalleryMngt() {
                     Upload
                   </button>
                 </div>
+                <button
+                  className="btn btn-danger form-control my-3"
+                  onClick={handleDeleteAll}
+                >
+                  Delete All Photos
+                </button>
 
                 {/* Display Gallery */}
                 <div className="gallery-grid">
@@ -118,6 +152,7 @@ function GalleryMngt() {
                             src={`/uploads/${photo.filename}`}
                             alt={`Gallery ${photo._id}`}
                             className="img-fluid"
+                            style={{ width: '200px', height: '200px', objectFit: 'cover' }}
                           />
                           <div className="delete-button-container">
                             <button

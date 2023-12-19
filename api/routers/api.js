@@ -2,6 +2,7 @@ const router = require('express').Router()
 const regc = require('../controllers/regcontroller')
 const teamc = require('../controllers/teamcontroller')
 const photoc = require('../controllers/photocontroller')
+const aboutc = require('../controllers/aboutcontroller')
 const multer = require('multer');
 
 
@@ -31,6 +32,7 @@ router.delete('/deleteTeamMember/:id', teamc.deleteTeamMember);
 router.post('/addPhotos', upload.array('photos', 20), photoc.addPhotos);
 router.get('/getAllPhotos', photoc.getAllPhotos);
 router.delete('/deletePhoto/:id', photoc.deletePhoto); 
+router.delete('/deleteAllPhotos', photoc.deleteAllPhotos); 
 
 
 module.exports = router
