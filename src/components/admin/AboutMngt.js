@@ -71,7 +71,7 @@ function AboutMngt() {
         <div className="container">
           <div className="row">
             <Left />
-            <div className="col-md-8">
+            <div className="col-md-9">
               <h2>About Management</h2>
               {editing ? (
                 <form onSubmit={handleSubmit}>

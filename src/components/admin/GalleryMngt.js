@@ -152,7 +152,7 @@ function GalleryMngt() {
                             src={`/uploads/${photo.filename}`}
                             alt={`Gallery ${photo._id}`}
                             className="img-fluid"
-                            style={{ width: '200px', height: '200px', objectFit: 'cover' }}
+                            style={{ width: '100%', height: '200px', objectFit: 'cover' }}
                           />
                           <div className="delete-button-container">
                             <button
