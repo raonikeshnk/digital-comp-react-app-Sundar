@@ -1,9 +1,58 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Navbar from '../common/Navbar';
 import Footer from '../common/Footer';
 import Aboutsection from '../common/Aboutsection';
 
 function About() {
+  const [editing, setEditing] = useState(false);
+  const [mission, setMission] = useState('');
+  const [order, setOrder] = useState('');
+  const [order1, setOrder1] = useState('');
+  const [order2, setOrder2] = useState('');
+  const [order3, setOrder3] = useState('');
+  const [missionImage, setMissionImage] = useState(null);
+  const [vision, setVision] = useState('');
+  const [vision1, setVision1] = useState('');
+  const [vision2, setVision2] = useState('');
+  const [vision3, setVision3] = useState('');
+  const [visionImage, setVisionImage] = useState(null);
+  const [history, setHistory] = useState('');
+  const [history1, setHistory1] = useState('');
+  const [history2, setHistory2] = useState('');
+  const [history3, setHistory3] = useState('');
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch('/api/about');
+        if (response.ok) {
+          const data = await response.json();
+          setMission(data.mission);
+          setOrder(data.order);
+          setOrder1(data.order1);
+          setOrder2(data.order2);
+          setOrder3(data.order3);
+          setVision(data.vision);
+          setVision1(data.vision1);
+          setVision2(data.vision2);
+          setVision3(data.vision3);
+          setMissionImage(data.missionImage);
+          setVisionImage(data.visionImage);
+          setHistory(data.history);
+          setHistory1(data.history1);
+          setHistory2(data.history2);
+          setHistory3(data.history3);
+        } else {
+          console.error('Failed to fetch data.');
+        }
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
+  
     return ( 
         <>
   <div className="site-mobile-menu">
@@ -63,32 +112,28 @@ function About() {
             <h2 className="line-bottom mb-4">Our Mission</h2>
           </div>
           <p data-aos="fade-up" data-aos-delay={100}>
-            At Digital Computer Technology, our mission is to empower
-            individuals with cutting-edge computer education, fostering
-            innovation and shaping future leaders in the digital era. We achieve
-            this by providing:
+        {mission}
           </p>
           <ul
             className="ul-check list-unstyled mb-5 primary"
             data-aos="fade-up"
             data-aos-delay={200}
           >
-            <li>Empower individuals with cutting-edge computer education.</li>
+            <li>{order}</li>
             <li>
-              Foster innovation and creativity in a dynamic learning
-              environment.
+             {order1}
             </li>
-            <li>Shape future leaders in the digital era.</li>
+            <li>{order2}</li>
           </ul>
           <p data-aos="fade-up" data-aos-delay={300}>
             <a href="#" className="btn btn-primary">
               Get Started
-            </a>
+            </a> 
           </p>
         </div>
         <div className="col-lg-6" data-aos="fade-up" data-aos-delay={0}>
           <figure className="img-wrap-2">
-            <img src="images/mission.png" alt="Image" className="img-fluid" />
+            <img src={`upload/${missionImage}`} alt="Image" className="img-fluid" />
             <div className="dotted" />
           </figure>
         </div>
@@ -100,7 +145,7 @@ function About() {
       <div className="row justify-content-between">
         <div className="col-lg-6" data-aos="fade-up" data-aos-delay={0}>
           <figure className="img-wrap-2">
-            <img src="images/vision.png" alt="Image" className="img-fluid" />
+          <img src={`${process.env.PUBLIC_URL}/upload/${visionImage}`} alt="Vision Image" className="img-fluid"/>
             <div className="dotted" />
           </figure>
         </div>
@@ -113,20 +158,17 @@ function About() {
             <h2 className="line-bottom mb-4">Our Vision</h2>
           </div>
           <p data-aos="fade-up" data-aos-delay={100}>
-            Our vision at Digital Computer Technology is to be a beacon of
-            excellence in computer education, recognized for nurturing minds,
-            fostering creativity, and empowering success. We envision:
+           {vision}
           </p>
           <ul
             className="ul-check list-unstyled mb-5 primary"
             data-aos="fade-up"
             data-aos-delay={200}
           >
-            <li>Be a beacon of excellence in computer education.</li>
-            <li>Nurture minds, fostering creativity and empowering success.</li>
+            <li>${vision1}</li>
+            <li>{vision2}</li>
             <li>
-              Contribute to a technologically advanced and digitally inclusive
-              society.
+              {vision3}
             </li>
           </ul>
           <p data-aos="fade-up" data-aos-delay={300}>
@@ -447,7 +489,7 @@ function About() {
                     </div>
                   </div>
                 </div>
-              </div>
+              </div>x
             </div>{" "}
             {/* .accordion-item */}
             <div className="accordion-item">

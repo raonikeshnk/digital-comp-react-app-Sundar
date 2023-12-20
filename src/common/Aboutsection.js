@@ -1,4 +1,34 @@
+import { useEffect, useState } from "react";
+
 function Aboutsection() {
+ 
+    const [history, setHistory] = useState('');
+    const [history1, setHistory1] = useState('');
+    const [history2, setHistory2] = useState('');
+    const [history3, setHistory3] = useState('');
+  
+    useEffect(() => {
+      const fetchData = async () => {
+        try {
+          const response = await fetch('/api/about');
+          if (response.ok) {
+            const data = await response.json();
+            
+            setHistory(data.history);
+            setHistory1(data.history1);
+            setHistory2(data.history2);
+            setHistory3(data.history3);
+          } else {
+            console.error('Failed to fetch data.');
+          }
+        } catch (error) {
+          console.error('Error:', error);
+        }
+      };
+  
+      fetchData();
+    }, []);
+    
     return ( 
         <div className="untree_co-section">
         <div className="container">
@@ -12,20 +42,16 @@ function Aboutsection() {
                 Brief History
               </h2>
               <p data-aos="fade-up" data-aos-delay={100}>
-                Welcome to <b>Digital Computer Technology</b>, Kotputli! Founded by
-                Pushpendra Yadav in June 2017, we take pride in delivering
-                exceptional computer education, offering a diverse range of distance
-                learning courses, and serving as a reliable internet provider.
-                Explore our services
+                {history}
               </p>
               <ul
                 className="list-unstyled ul-check mb-5 primary"
                 data-aos="fade-up"
                 data-aos-delay={200}
               >
-                <li>Comprehensive Computer Education</li>
-                <li>Varied Distance Learning Courses</li>
-                <li>Dependable Internet Services</li>
+                <li>{history1}</li>
+                <li>{history2}</li>
+                <li>{history3}</li>
               </ul>
               <div className="row count-numbers mb-5">
                 <div

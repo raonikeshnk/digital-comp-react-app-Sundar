@@ -54,3 +54,16 @@
 .gallery-item:hover .delete-button-container {
   opacity: 1;
 }
+.img-wrap-2 {
+  position: relative;
+}
+
+.img-wrap-2 img {
+  max-width: 100%;
+  height: auto;
+}
+
+.dotted {
+  position: absolute;
+  /* Add your dotted styling here */
+}
