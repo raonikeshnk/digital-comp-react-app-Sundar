@@ -18,6 +18,8 @@ import Addteamform from './components/admin/Addteamform';
 import TeamUpdate from './components/admin/TeamUpdate';
 import GalleryMngt from './components/admin/GalleryMngt';
 import AboutMngt from './components/admin/AboutMngt';
+import QueryMngt from './components/admin/QueryMngt';
+
 
 function App() {
   const [loginname, setLoginname] = useState(localStorage.getItem('loginname'))
@@ -41,6 +43,9 @@ function App() {
           <Route path="/teamupdate/:id"  element={<TeamUpdate />} />
           <Route path="/gallerymngt"  element={<GalleryMngt />} />
           <Route path="/aboutmngt"  element={<AboutMngt />} />
+          <Route path="/querymngt"  element={<QueryMngt />} />
+
+
 
 
 

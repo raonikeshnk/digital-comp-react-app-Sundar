@@ -5,6 +5,7 @@ const regc = require('../controllers/regcontroller');
 const teamc = require('../controllers/teamcontroller');
 const photoc = require('../controllers/photocontroller');
 const aboutc = require('../controllers/aboutcontroller');
+const queryc = require('../controllers/querycontroller')
 const multer = require('multer');
 
 const storage = multer.diskStorage({
@@ -40,7 +41,7 @@ router.put(
   upload.fields([
     { name: 'missionImage', maxCount: 1 },
     { name: 'visionImage', maxCount: 1 },
-    { name: 'historyimage', maxCount: 1 }, // Add historyimage field
+    { name: 'historyImage', maxCount: 1 }, // Add historyimage field
   ]),
   aboutc.updateAboutData
 );

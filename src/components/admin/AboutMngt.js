@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+  import React, { useState, useEffect } from 'react';
 import Navbar from "./common/Navbar";
 import Left from "./common/Left";
 
@@ -19,8 +19,8 @@ function AboutMngt() {
   const [history1, setHistory1] = useState('');
   const [history2, setHistory2] = useState('');
   const [history3, setHistory3] = useState('');
-  const [historyImage, setHistoryImage] = useState(null); // New state for historyimage
-
+  const [historyImage, setHistoryImage] = useState(null);
+ 
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -42,7 +42,8 @@ function AboutMngt() {
           setHistory1(data.history1);
           setHistory2(data.history2);
           setHistory3(data.history3);
-          setHistoryImage(data.historyimage); // Set historyimage state
+          setHistoryImage(data.historyimage);
+         
         } else {
           console.error('Failed to fetch data.');
         }
@@ -82,7 +83,8 @@ function AboutMngt() {
     formData.append('history1', history1);
     formData.append('history2', history2);
     formData.append('history3', history3);
-
+    formData.append('historyImage', historyImage);
+   
     try {
       const response = await fetch('/api/updateabout', {
         method: 'PUT',
@@ -105,7 +107,7 @@ function AboutMngt() {
         setHistory1(data.history1);
         setHistory2(data.history2);
         setHistory3(data.history3);
-        setHistoryImage(data.historyimage);
+        
       } else {
         console.error('Failed to update data.');
       }
@@ -165,10 +167,11 @@ function AboutMngt() {
                     <input type="file" id="visionImage" className="form-control" onChange={(e) => handleFileChange(e, setVisionImage)} />
                   </div>
                   <div className="mb-3">
-                    <label htmlFor="historyimage" className="form-label">History Image:</label>
-                    <img src={(historyImage)} alt="History" style={{ maxWidth: '100px', maxHeight: '100px' }} />
-                    <input type="file" id="historyimage" className="form-control" onChange={(e) => handleFileChange(e, setHistoryImage)} />
+                    <label htmlFor="historyImage" className="form-label">History Image:</label>
+                    <img src={(historyImage)} alt="Mission" style={{ maxWidth: '100px', maxHeight: '100px' }} />
+                    <input type="file" id="historyImage" className="form-control" onChange={(e) => handleFileChange(e, setHistoryImage)} />
                   </div>
+                  
                   <div className="mb-3">
                     <label htmlFor="history" className="form-label">History:</label>
                     <textarea id="history" className="form-control" value={history} onChange={(e) => setHistory(e.target.value)}></textarea>
@@ -185,6 +188,7 @@ function AboutMngt() {
                     <label htmlFor="history3" className="form-label">History 3:</label>
                     <textarea id="history3" className="form-control" value={history3} onChange={(e) => setHistory3(e.target.value)}></textarea>
                   </div>
+          
 
                   <button type="submit" className="btn btn-primary form-control">Update Data</button>
                 </form>
@@ -208,7 +212,7 @@ function AboutMngt() {
                         <th>History 2</th>
                         <th>History 3</th>
                         <th>History Image</th> {/* New header for historyimage */}
-
+                       
 
                       </tr>
                     </thead>

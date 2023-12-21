@@ -12,7 +12,7 @@ const aboutSchema = new mongoose.Schema({
   vision2: String,
   vision3: String,
   visionImage: String,
-  history:String ,  // Change here to use an array of strings for history entries
+  history: String ,  // Change here to use an array of strings for history entries
   history1: String,  // New field
   history2: String,  // New field
   history3: String,  // New field
