@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Navbar from '../common/Navbar';
 import Footer from '../common/Footer';
 import Aboutsection from '../common/Aboutsection';
-
+import Staffsection  from '../common/Staffsection'
 function About() {
   const [editing, setEditing] = useState(false);
   const [mission, setMission] = useState('');
@@ -16,10 +16,7 @@ function About() {
   const [vision2, setVision2] = useState('');
   const [vision3, setVision3] = useState('');
   const [visionImage, setVisionImage] = useState(null);
-  const [history, setHistory] = useState('');
-  const [history1, setHistory1] = useState('');
-  const [history2, setHistory2] = useState('');
-  const [history3, setHistory3] = useState('');
+  
 
   useEffect(() => {
     const fetchData = async () => {
@@ -38,10 +35,7 @@ function About() {
           setVision3(data.vision3);
           setMissionImage(data.missionImage);
           setVisionImage(data.visionImage);
-          setHistory(data.history);
-          setHistory1(data.history1);
-          setHistory2(data.history2);
-          setHistory3(data.history3);
+          
         } else {
           console.error('Failed to fetch data.');
         }
@@ -180,202 +174,8 @@ function About() {
       </div>
     </div>
   </div>
-  <div className="untree_co-section bg-light">
-    <div className="container">
-      <div className="row justify-content-center mb-5">
-        <div
-          className="col-lg-7 text-center"
-          data-aos="fade-up"
-          data-aos-delay={0}
-        >
-          <h2 className="line-bottom text-center mb-4">Our Team</h2>
-          <p>
-            Meet the brilliant minds behind Digital Computer Technology. Get to
-            know the faces shaping your learning experience.
-          </p>
-        </div>
-      </div>
-      <div className="row">
-        <div
-          className="col-12 col-sm-6 col-md-6 mb-4 mb-lg-0 col-lg-4"
-          data-aos="fade-up"
-          data-aos-delay={0}
-        >
-          <div className="staff text-center">
-            <div className="mb-4">
-              <img src="images/staff_2.jpg" alt="Image" className="img-fluid" />
-            </div>
-            <div className="staff-body">
-              <h3 className="staff-name">Ramavtar Yadav</h3>
-              <span className="d-block position mb-4">CEO</span>
-            </div>
-          </div>
-        </div>
-        <div
-          className="col-12 col-sm-6 col-md-6 mb-4 mb-lg-0 col-lg-4"
-          data-aos="fade-up"
-          data-aos-delay={100}
-        >
-          <div className="staff text-center">
-            <div className="mb-4">
-              <img
-                src="images/staff/pushpendra.png"
-                alt="Image"
-                className="img-fluid"
-              />
-            </div>
-            <div className="staff-body">
-              <h3 className="staff-name">Pushpendra Kumar Yadav</h3>
-              <span className="d-block position mb-4">Managing Director</span>
-            </div>
-          </div>
-        </div>
-        <div
-          className="col-12 col-sm-6 col-md-6 mb-4 mb-lg-0 col-lg-4"
-          data-aos="fade-up"
-          data-aos-delay={200}
-        >
-          <div className="staff text-center">
-            <div className="mb-4">
-              <img
-                src="images/staff/ashok-kumar.png"
-                alt="Image"
-                className="img-fluid"
-              />
-            </div>
-            <div className="staff-body">
-              <h3 className="staff-name">Ashok Kumar</h3>
-              <span className="d-block position mb-4">
-                Ethical Hacking Expert
-              </span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="row">
-        <div
-          className="col-12 col-sm-6 col-md-6 mb-4 mb-lg-0 col-lg-4"
-          data-aos="fade-up"
-          data-aos-delay={0}
-        >
-          <div className="staff text-center">
-            <div className="mb-4">
-              <img
-                src="images/staff/antiksha.png"
-                alt="Image"
-                className="img-fluid"
-              />
-            </div>
-            <div className="staff-body">
-              <h3 className="staff-name">Antiksha Swami</h3>
-              <span className="d-block position mb-4">Legal Advisor</span>
-            </div>
-          </div>
-        </div>
-        <div
-          className="col-12 col-sm-6 col-md-6 mb-4 mb-lg-0 col-lg-4"
-          data-aos="fade-up"
-          data-aos-delay={100}
-        >
-          <div className="staff text-center">
-            <div className="mb-4">
-              <img
-                src="images/staff/mk-yadav.png"
-                alt="Image"
-                className="img-fluid"
-              />
-            </div>
-            <div className="staff-body">
-              <h3 className="staff-name">M.K. Yadav</h3>
-              <span className="d-block position mb-4">App Developer</span>
-            </div>
-          </div>
-        </div>
-        <div
-          className="col-12 col-sm-6 col-md-6 mb-4 mb-lg-0 col-lg-4"
-          data-aos="fade-up"
-          data-aos-delay={200}
-        >
-          <div className="staff text-center">
-            <div className="mb-4">
-              <img
-                src="images/staff/surender.png"
-                alt="Image"
-                className="img-fluid"
-              />
-            </div>
-            <div className="staff-body">
-              <h3 className="staff-name">Surender Yadav</h3>
-              <span className="d-block position mb-4">Accountant</span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="row">
-        <div
-          className="col-12 col-sm-6 col-md-6 mb-4 mb-lg-0 col-lg-4"
-          data-aos="fade-up"
-          data-aos-delay={0}
-        >
-          <div className="staff text-center">
-            <div className="mb-4">
-              <img
-                src="images/staff/krishan.png"
-                alt="Image"
-                className="img-fluid"
-              />
-            </div>
-            <div className="staff-body">
-              <h3 className="staff-name">Krishan Yadav</h3>
-              <span className="d-block position mb-4">
-                6<sup>th</sup> to 12<sup>th</sup> Math Specialist
-              </span>
-            </div>
-          </div>
-        </div>
-        <div
-          className="col-12 col-sm-6 col-md-6 mb-4 mb-lg-0 col-lg-4"
-          data-aos="fade-up"
-          data-aos-delay={100}
-        >
-          <div className="staff text-center">
-            <div className="mb-4">
-              <img
-                src="images/staff/ashok.png"
-                alt="Image"
-                className="img-fluid"
-              />
-            </div>
-            <div className="staff-body">
-              <h3 className="staff-name">Ashok Kumawat</h3>
-              <span className="d-block position mb-4">Tally Expert</span>
-            </div>
-          </div>
-        </div>
-        <div
-          className="col-12 col-sm-6 col-md-6 mb-4 mb-lg-0 col-lg-4"
-          data-aos="fade-up"
-          data-aos-delay={200}
-        >
-          <div className="staff text-center">
-            <div className="mb-4">
-              <img
-                src="images/staff/praveen.png"
-                alt="Image"
-                className="img-fluid"
-              />
-            </div>
-            <div className="staff-body">
-              <h3 className="staff-name">Praveen Yadav</h3>
-              <span className="d-block position mb-4">Rs-cit Tutor</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
   {/* /.untree_co-section */}
- 
+<Staffsection/> 
  <Aboutsection/>
 
   <div className="untree_co-section">
