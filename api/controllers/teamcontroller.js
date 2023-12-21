@@ -4,8 +4,8 @@ const Team= require('../models/team')
 exports.addTeam = async (req, res) => {
     try {
       const { fullName, designation, experience } = req.body;
-      const img = req.file ? req.file.path : '';
-  
+      const img = req.file ? req.file.filename : undefined;
+      console.log(req.file)
       const newTeamMember = new Team({
         fullName,
         designation,
@@ -21,6 +21,8 @@ exports.addTeam = async (req, res) => {
       res.status(500).json({ success: false, message: "Internal server error" });
     }
   };
+
+  
   exports.getAllTeamMembers = async (req, res) => {
     try {
         const teamMembers = await Team.find({});

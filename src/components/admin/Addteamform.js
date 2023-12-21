@@ -39,7 +39,7 @@ function Addteamform() {
 
             const response = await fetch("../api/addTeamMember", {
                 method: "POST",
-                body: formDataWithFile, 
+                body: formDataWithFile,
             });
 
             const data = await response.json();

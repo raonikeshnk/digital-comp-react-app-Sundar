@@ -127,7 +127,7 @@ function About() {
         </div>
         <div className="col-lg-6" data-aos="fade-up" data-aos-delay={0}>
           <figure className="img-wrap-2">
-            <img src={`upload/${missionImage}`} alt="Image" className="img-fluid" />
+            <img src={missionImage} alt="Mission Image" className="img-fluid" />
             <div className="dotted" />
           </figure>
         </div>
@@ -139,7 +139,7 @@ function About() {
       <div className="row justify-content-between">
         <div className="col-lg-6" data-aos="fade-up" data-aos-delay={0}>
           <figure className="img-wrap-2">
-          <img src={`${process.env.PUBLIC_URL}/upload/${visionImage}`} alt="Vision Image" className="img-fluid"/>
+          <img src={visionImage} alt="Vision Image" className="img-fluid"/>
             <div className="dotted" />
           </figure>
         </div>
