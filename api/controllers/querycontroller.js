@@ -1,9 +1,13 @@
-  const Query=  require('../models/Query')
- exports.submitContactForm = async (req, res) => {
+const nodemailer = require('nodemailer');
+const Query = require('../models/Query');
+
+// Create Nodemailer transporter
+
+
+exports.submitContactForm = async (req, res) => {
   try {
     const { name, email, subject, message } = req.body;
 
-    // Create a new Query instance
     const newQuery = new Query({
       name,
       email,
@@ -11,7 +15,6 @@
       message,
     });
 
-    // Save the new query to the database
     await newQuery.save();
 
     res.status(201).json({ success: true, message: 'Query submitted successfully' });
@@ -21,9 +24,8 @@
   }
 };
 
-   exports. getAllQueries = async (req, res) => {
+exports.getAllQueries = async (req, res) => {
   try {
-    // Fetch all queries from the database
     const queries = await Query.find();
 
     res.status(200).json({ success: true, queries });
@@ -37,7 +39,6 @@ exports.deleteQuery = async (req, res) => {
   const { id } = req.params;
 
   try {
-    // Find the query by ID and delete it
     const deletedQuery = await Query.findByIdAndDelete(id);
 
     if (!deletedQuery) {
@@ -51,4 +52,49 @@ exports.deleteQuery = async (req, res) => {
   }
 };
 
+exports.replyToQuery = async (req, res) => {
+  try {
+    const { id, email, subject, body } = req.body;
 
+    const transporter = nodemailer.createTransport({
+      host: "smtp.gmail.com",
+      port: 587,
+      secure: false,
+      auth: {
+        // TODO: replace `user` and `pass` values from <https://forwardemail.net>
+        user: 'lkyadav2311@gmail.com',
+        pass: 'ybauqrdvjtuubnqv'
+      }
+    });
+    console.log('Recipient Email:', email);
+    const emailOptions = {
+      from: user,
+      to: email,
+      subject: subject || 'Re: Query Reply',
+      text: body,
+    };
+    
+    transporter.sendMail(emailOptions);
+    
+
+    transporter.sendMail(emailOptions, (error, info) => {
+      if (error) {
+        console.error('Error sending email:', error);
+        return res.status(500).json({ success: false, error: 'Error sending email' });
+      }
+      console.log('Email sent:', info.response);
+
+      Query.findByIdAndUpdate(id, { status: 'Replied' }, (updateError) => {
+        if (updateError) {
+          console.error('Error updating query status:', updateError);
+          return res.status(500).json({ success: false, error: 'Error updating query status' });
+        }
+        console.log('Query status updated successfully');
+        res.json({ success: true });
+      });
+    });
+  } catch (error) {
+    console.error('Error replying to query:', error);
+    res.status(500).json({ success: false, error: 'Internal Server Error' });
+  }
+};

@@ -35,8 +35,9 @@ router.delete('/deletePhoto/:id', photoc.deletePhoto);
 router.delete('/deleteAllPhotos', photoc.deleteAllPhotos);
 router.get('/getAllQueries', queryc.getAllQueries);
 router.post('/submitContactForm', queryc.submitContactForm);
-
 router.delete('/deleteQuery/:id', queryc.deleteQuery);
+router.post('/replyToQuery', queryc.replyToQuery);
+
 
 router.get('/about', aboutc.getAboutData);
 router.put(

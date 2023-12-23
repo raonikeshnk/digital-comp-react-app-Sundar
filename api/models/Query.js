@@ -6,7 +6,9 @@
         name:String,
         email:String,
         subject:String,
-        message:String
+        message:String,
+        status:{type:String,default:'Email/Reply'}
+
     })
 
 

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Navbar from '../common/Navbar';
 import Footer from '../common/Footer';
 
-function Contact({ onSubmit }) {
+function Contact() {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -20,10 +20,9 @@ function Contact({ onSubmit }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     try {
-      // Assuming you have an API endpoint to handle form submissions
-      const response = await fetch('https://example.com/api/contact', {
+      const response = await fetch('/api/submitContactForm', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -31,18 +30,18 @@ function Contact({ onSubmit }) {
         body: JSON.stringify(formData),
       });
 
-      if (response.ok) {
-        // Handle successful response, e.g., show a success message
-        console.log('Form data submitted successfully');
+      const data = await response.json();
+      
+
+      if (data.success) {
+        console.log('Contact form submitted successfully');
       } else {
-        // Handle error response, e.g., show an error message
-        console.error('Failed to submit form data');
+        console.error('Failed to submit contact form');
       }
     } catch (error) {
-      console.error('Error submitting form data:', error);
+      console.error('Error submitting contact form', error);
     }
   };
-
 
   return (
     <>
@@ -57,16 +56,27 @@ function Contact({ onSubmit }) {
 
       <Navbar />
 
-      <div className="untree_co-hero overlay" style={{ backgroundImage: 'url("images/explore-1.png")' }}>
+      <div
+        className="untree_co-hero overlay"
+        style={{ backgroundImage: 'url("images/explore-1.png")' }}
+      >
         <div className="container">
           <div className="row align-items-center justify-content-center">
             <div className="col-12">
               <div className="row justify-content-center ">
                 <div className="col-lg-6 text-center ">
-                  <h1 className="mb-4 mt-5 heading text-white" data-aos="fade-up" data-aos-delay={100}>
+                  <h1
+                    className="mb-4 mt-5 heading text-white"
+                    data-aos="fade-up"
+                    data-aos-delay={100}
+                  >
                     Contact Us
                   </h1>
-                  <div className="mb-5 mt-5 text-white desc mx-auto" data-aos="fade-up" data-aos-delay={200}>
+                  <div
+                    className="mb-5 mt-5 text-white desc mx-auto"
+                    data-aos="fade-up"
+                    data-aos-delay={200}
+                  >
                     <p>
                       Connect with us at Digital Computer Technology. Whether you
                       have questions, want to enroll, or just say hello, we're here
@@ -84,7 +94,11 @@ function Contact({ onSubmit }) {
       <div className="untree_co-section">
         <div className="container">
           <div className="row mb-5">
-            <div className="col-lg-4 mb-5 order-2 mb-lg-0" data-aos="fade-up" data-aos-delay={100}>
+            <div
+              className="col-lg-4 mb-5 order-2 mb-lg-0"
+              data-aos="fade-up"
+              data-aos-delay={100}
+            >
               <div className="contact-info">
                 <div className="address mt-4">
                   <i className="icon-room" />
@@ -115,7 +129,11 @@ function Contact({ onSubmit }) {
                 </div>
               </div>
             </div>
-            <div className="col-lg-7 mr-auto order-1" data-aos="fade-up" data-aos-delay={200}>
+            <div
+              className="col-lg-7 mr-auto order-1"
+              data-aos="fade-up"
+              data-aos-delay={200}
+            >
               <form onSubmit={handleSubmit}>
                 <div className="row">
                   <div className="col-6 mb-3">
