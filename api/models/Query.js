@@ -1,15 +1,15 @@
- const mongoose = require('mongoose')
+    const mongoose = require('mongoose')
 
 
 
- const QuerySchema = mongoose.Schema({
-    name:String,
-    email:String,
-    subject:String,
-    message:String
-})
+    const QuerySchema = mongoose.Schema({
+        name:String,
+        email:String,
+        subject:String,
+        message:String
+    })
 
 
 
 
- module.exports=mongoose.model('Query',QuerySchema)
+    module.exports=mongoose.model('Query',QuerySchema)

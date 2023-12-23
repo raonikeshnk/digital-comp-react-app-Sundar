@@ -1,11 +1,9 @@
-
-
 const router = require('express').Router();
 const regc = require('../controllers/regcontroller');
 const teamc = require('../controllers/teamcontroller');
 const photoc = require('../controllers/photocontroller');
 const aboutc = require('../controllers/aboutcontroller');
-const queryc = require('../controllers/querycontroller')
+const queryc = require('../controllers/querycontroller');
 const multer = require('multer');
 
 const storage = multer.diskStorage({
@@ -35,13 +33,18 @@ router.post('/addPhotos', upload.array('photos', 20), photoc.addPhotos);
 router.get('/getAllPhotos', photoc.getAllPhotos);
 router.delete('/deletePhoto/:id', photoc.deletePhoto);
 router.delete('/deleteAllPhotos', photoc.deleteAllPhotos);
+router.get('/getAllQueries', queryc.getAllQueries);
+router.post('/submitContactForm', queryc.submitContactForm);
+
+router.delete('/deleteQuery/:id', queryc.deleteQuery);
+
 router.get('/about', aboutc.getAboutData);
 router.put(
   '/updateabout',
   upload.fields([
     { name: 'missionImage', maxCount: 1 },
     { name: 'visionImage', maxCount: 1 },
-    { name: 'historyImage', maxCount: 1 }, // Add historyimage field
+    { name: 'historyImage', maxCount: 1 },
   ]),
   aboutc.updateAboutData
 );
