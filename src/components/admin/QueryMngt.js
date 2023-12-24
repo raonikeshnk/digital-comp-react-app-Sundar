@@ -1,15 +1,18 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Left from "./common/Left";
 import Navbar from "./common/Navbar";
+import config from '../../config';
 
 function QueryMngt() {
   const [queries, setQueries] = useState([]);
   const [selectedQuery, setSelectedQuery] = useState(null);
   const [replyForm, setReplyForm] = useState({ email: "", subject: "", body: "" });
+  const [emailSentSuccess, setEmailSentSuccess] = useState(false);
+  const [isReplyFormVisible, setReplyFormVisibility] = useState(false);
 
   const fetchQueries = async () => {
     try {
-      const response = await fetch('/api/getAllQueries');
+      const response = await fetch('../api/getAllQueries');
       const data = await response.json();
 
       if (data.success) {
@@ -52,15 +55,22 @@ function QueryMngt() {
       subject: `Re: ${query.subject}`,
       body: "", // You can pre-fill the body if needed
     });
+    setReplyFormVisibility(true);
   };
 
   const handleCloseForm = () => {
     setSelectedQuery(null);
     // Clear the reply form
     setReplyForm({ email: "", subject: "", body: "" });
+    // Reset the email sent success state
+    setEmailSentSuccess(false);
+    // Hide the reply form
+    setReplyFormVisibility(false);
   };
 
-  const handleSendReply = async (email, subject, body) => {
+  const handleSendReply = async () => {
+    const { email, subject, body } = replyForm;
+
     try {
       const response = await fetch('../api/replyToQuery', {
         method: 'POST',
@@ -74,18 +84,21 @@ function QueryMngt() {
 
       if (data.success) {
         console.log('Email reply sent successfully');
+        // Set the state to display success message
+        setEmailSentSuccess(true);
         // Close the form after sending the reply
         handleCloseForm();
         // You may also want to fetch updated queries after sending the reply
         fetchQueries();
       } else {
         console.error('Failed to send email reply');
+        // Optionally, you can set an error state and display an error message
       }
     } catch (error) {
-      console.error('Error sending email reply:');
+      console.error('Error sending email reply:', error);
+      // Optionally, you can set an error state and display an error message
     }
   };
-
 
   return (
     <>
@@ -124,20 +137,31 @@ function QueryMngt() {
                           </button>
                         </td>
                         <td>
-                          <button
-                            className="btn btn-primary"
-                            onClick={() => handleReply(query)}
-                          >
-                            Reply
-                          </button>
+                          {query.status === 'Replied' ? (
+                            <button className="btn btn-primary" disabled>
+                              Replied
+                            </button>
+                          ) : (
+                            <button
+                              className="btn btn-primary"
+                              onClick={() => handleReply(query)}
+                            >
+                              Reply
+                            </button>
+                          )}
                         </td>
                       </tr>
                     ))}
                   </tbody>
                 </table>
               </div>
-              {selectedQuery && (
+              {selectedQuery && isReplyFormVisible && (
                 <div className="mt-4">
+                  {emailSentSuccess && (
+                    <div className="alert alert-success" role="alert">
+                      Email sent successfully!
+                    </div>
+                  )}
                   <h3>Reply to Query</h3>
                   <form
                     onSubmit={(e) => {
@@ -146,6 +170,27 @@ function QueryMngt() {
                     }}
                   >
                     <div className="mb-3">
+                      <label htmlFor="from" className="form-label">
+                        From:
+                      </label>
+                      <input
+                        type="email"
+                        className="form-control"
+                        id="from"
+                        value={config.senderEmail} // Use the email from replyForm state
+                        onChange={(e) => setReplyForm({ ...replyForm, email: e.target.value })}
+                        readOnly // Make it read-only as it's derived from the selected query
+                      />
+                      <label htmlFor="to" className="form-label">
+                        To:
+                      </label>
+                      <input
+                        type="email"
+                        className="form-control"
+                        id="to"
+                        value={selectedQuery.email} // Use the email from the selected query
+                        readOnly // Make it read-only as it's derived from the selected query
+                      />
                       <label htmlFor="body" className="form-label">
                         Message:
                       </label>

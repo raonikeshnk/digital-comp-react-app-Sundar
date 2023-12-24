@@ -52,36 +52,45 @@ exports.deleteQuery = async (req, res) => {
   }
 };
 
+
 exports.replyToQuery = async (req, res) => {
   try {
     const { id, email, subject, body } = req.body;
+
+    console.log('Request Body:', req.body);
+
+    if (!email) {
+      console.error('Recipient email is undefined');
+      return res.status(400).json({ success: false, error: 'Recipient email is undefined' });
+    }
 
     const transporter = nodemailer.createTransport({
       host: "smtp.gmail.com",
       port: 587,
       secure: false,
       auth: {
-        // TODO: replace `user` and `pass` values from <https://forwardemail.net>
         user: 'lkyadav2311@gmail.com',
         pass: 'ybauqrdvjtuubnqv'
       }
     });
+
     console.log('Recipient Email:', email);
+
     const emailOptions = {
-      from: user,
-      to: email,
+      from: "lkyadav2311@gmail.com",
+      to: email,  // Ensure that the email variable is defined and contains the recipient's email
       subject: subject || 'Re: Query Reply',
       text: body,
     };
-    
-    transporter.sendMail(emailOptions);
-    
+
+    console.log('Email Options:', emailOptions);
 
     transporter.sendMail(emailOptions, (error, info) => {
       if (error) {
         console.error('Error sending email:', error);
         return res.status(500).json({ success: false, error: 'Error sending email' });
       }
+
       console.log('Email sent:', info.response);
 
       Query.findByIdAndUpdate(id, { status: 'Replied' }, (updateError) => {
@@ -89,6 +98,7 @@ exports.replyToQuery = async (req, res) => {
           console.error('Error updating query status:', updateError);
           return res.status(500).json({ success: false, error: 'Error updating query status' });
         }
+
         console.log('Query status updated successfully');
         res.json({ success: true });
       });
