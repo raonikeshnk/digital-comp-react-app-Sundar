@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import Navbar from '../common/Navbar';
 import Footer from '../common/Footer';
 
@@ -35,6 +37,16 @@ function Contact() {
 
       if (data.success) {
         console.log('Contact form submitted successfully');
+        setFormData({
+          name: '',
+          email: '',
+          subject: '',
+          message: '',
+        });
+        toast.success(
+            "Your contact request has been sent! Thank you for reaching out to us. We will get back to you as soon as possible"
+        );
+  
       } else {
         console.error('Failed to submit contact form');
       }
@@ -192,6 +204,8 @@ function Contact() {
       </div>
 
       <Footer />
+      <ToastContainer />
+
     </>
   );
 }

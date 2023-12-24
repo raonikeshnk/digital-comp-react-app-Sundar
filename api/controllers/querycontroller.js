@@ -1,9 +1,6 @@
 const nodemailer = require('nodemailer');
 const Query = require('../models/Query');
 
-// Create Nodemailer transporter
-
-
 exports.submitContactForm = async (req, res) => {
   try {
     const { name, email, subject, message } = req.body;
@@ -57,8 +54,6 @@ exports.replyToQuery = async (req, res) => {
   try {
     const { id, email, subject, body } = req.body;
 
-    console.log('Request Body:', req.body);
-
     if (!email) {
       console.error('Recipient email is undefined');
       return res.status(400).json({ success: false, error: 'Recipient email is undefined' });
@@ -74,18 +69,14 @@ exports.replyToQuery = async (req, res) => {
       }
     });
 
-    console.log('Recipient Email:', email);
-
     const emailOptions = {
       from: "lkyadav2311@gmail.com",
-      to: email,  // Ensure that the email variable is defined and contains the recipient's email
+      to: email,
       subject: subject || 'Re: Query Reply',
       text: body,
     };
 
-    console.log('Email Options:', emailOptions);
-
-    transporter.sendMail(emailOptions, (error, info) => {
+    transporter.sendMail(emailOptions, async (error, info) => {
       if (error) {
         console.error('Error sending email:', error);
         return res.status(500).json({ success: false, error: 'Error sending email' });
@@ -93,15 +84,14 @@ exports.replyToQuery = async (req, res) => {
 
       console.log('Email sent:', info.response);
 
-      Query.findByIdAndUpdate(id, { status: 'Replied' }, (updateError) => {
-        if (updateError) {
-          console.error('Error updating query status:', updateError);
-          return res.status(500).json({ success: false, error: 'Error updating query status' });
-        }
-
+      try {
+        await Query.findByIdAndUpdate(id, { status: 'Replied' });
         console.log('Query status updated successfully');
-        res.json({ success: true });
-      });
+        res.json({ success: true, message: 'Email reply sent successfully' });
+      } catch (updateError) {
+        console.error('Error updating query status:', updateError);
+        res.status(500).json({ success: false, error: 'Error updating query status' });
+      }
     });
   } catch (error) {
     console.error('Error replying to query:', error);

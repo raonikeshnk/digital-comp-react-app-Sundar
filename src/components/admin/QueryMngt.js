@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import Left from "./common/Left";
 import Navbar from "./common/Navbar";
 import config from '../../config';
@@ -30,15 +32,62 @@ function QueryMngt() {
   }, []);
 
   const handleDelete = async (id) => {
+    toast.info(
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+        <p style={{ marginBottom: '10px' }}>Are you sure you want to delete this query?</p>
+        <div style={{ display: 'flex', gap: '10px' }}>
+          <button
+            style={{
+              padding: '8px 16px',
+              backgroundColor: '#dc3545',
+              color: '#fff',
+              border: 'none',
+              cursor: 'pointer',
+              borderRadius: '4px',
+            }}
+            onClick={() => {
+              deleteQuery(id);
+              toast.dismiss();
+            }}
+          >
+            Yes
+          </button>
+          <button
+            style={{
+              padding: '8px 16px',
+              backgroundColor: '#28a745',
+              color: '#fff',
+              border: 'none',
+              cursor: 'pointer',
+              borderRadius: '4px',
+            }}
+            onClick={() => toast.dismiss()}
+          >
+            No
+          </button>
+        </div>
+      </div>,
+      {
+        position: "top-center",
+        autoClose: false,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      }
+    );
+  };
+
+  const deleteQuery = async (id) => {
     try {
       const response = await fetch(`../api/deleteQuery/${id}`, {
         method: 'DELETE',
       });
       const data = await response.json();
-
       if (data.success) {
-        // Remove the deleted query from the state
         setQueries((prevQueries) => prevQueries.filter((query) => query._id !== id));
+        toast.success('Query deleted successfully');
       } else {
         console.error('Failed to delete query');
       }
@@ -60,11 +109,8 @@ function QueryMngt() {
 
   const handleCloseForm = () => {
     setSelectedQuery(null);
-    // Clear the reply form
     setReplyForm({ email: "", subject: "", body: "" });
-    // Reset the email sent success state
     setEmailSentSuccess(false);
-    // Hide the reply form
     setReplyFormVisibility(false);
   };
 
@@ -77,26 +123,25 @@ function QueryMngt() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ email, subject, body }),
+        body: JSON.stringify({ id: selectedQuery._id, email, subject, body }),
       });
 
       const data = await response.json();
 
       if (data.success) {
         console.log('Email reply sent successfully');
-        // Set the state to display success message
         setEmailSentSuccess(true);
-        // Close the form after sending the reply
+
         handleCloseForm();
-        // You may also want to fetch updated queries after sending the reply
+
+        toast.success('Email reply sent successfully');
+
         fetchQueries();
       } else {
         console.error('Failed to send email reply');
-        // Optionally, you can set an error state and display an error message
       }
     } catch (error) {
       console.error('Error sending email reply:', error);
-      // Optionally, you can set an error state and display an error message
     }
   };
 
@@ -110,58 +155,60 @@ function QueryMngt() {
             <div className="col-md-8">
               <div>
                 <h2>Query Management</h2>
-                <table className="table table-bordered">
-                  <thead>
-                    <tr>
-                      <th>Name</th>
-                      <th>Email</th>
-                      <th>Subject</th>
-                      <th>Message</th>
-                      <th>Action</th>
-                      <th>Action</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {queries.map((query) => (
-                      <tr key={query._id}>
-                        <td>{query.name}</td>
-                        <td>{query.email}</td>
-                        <td>{query.subject}</td>
-                        <td>{query.message}</td>
-                        <td>
-                          <button
-                            className="btn btn-danger"
-                            onClick={() => handleDelete(query._id)}
-                          >
-                            Delete
-                          </button>
-                        </td>
-                        <td>
-                          {query.status === 'Replied' ? (
-                            <button className="btn btn-primary" disabled>
-                              Replied
-                            </button>
-                          ) : (
-                            <button
-                              className="btn btn-primary"
-                              onClick={() => handleReply(query)}
-                            >
-                              Reply
-                            </button>
-                          )}
-                        </td>
+                {emailSentSuccess && (
+                  <div className="alert alert-success" role="alert">
+                    Email sent successfully!
+                  </div>
+                )}
+                {(!isReplyFormVisible) && (
+                  <table className="table table-bordered">
+                    <thead>
+                      <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Subject</th>
+                        <th>Message</th>
+                        <th>Action</th>
+                        <th>Action</th>
                       </tr>
-                    ))}
-                  </tbody>
-                </table>
+                    </thead>
+                    <tbody>
+                      {queries.map((query) => (
+                        <tr key={query._id}>
+                          <td>{query.name}</td>
+                          <td>{query.email}</td>
+                          <td>{query.subject}</td>
+                          <td>{query.message}</td>
+                          <td>
+                            <button
+                              className="btn btn-danger"
+                              onClick={() => handleDelete(query._id)}
+                            >
+                              Delete
+                            </button>
+                          </td>
+                          <td>
+                            {query.status === 'Replied' ? (
+                              <button className="btn btn-primary" disabled>
+                                Replied
+                              </button>
+                            ) : (
+                              <button
+                                className="btn btn-primary"
+                                onClick={() => handleReply(query)}
+                              >
+                                Reply
+                              </button>
+                            )}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                )}
               </div>
               {selectedQuery && isReplyFormVisible && (
                 <div className="mt-4">
-                  {emailSentSuccess && (
-                    <div className="alert alert-success" role="alert">
-                      Email sent successfully!
-                    </div>
-                  )}
                   <h3>Reply to Query</h3>
                   <form
                     onSubmit={(e) => {
@@ -190,6 +237,17 @@ function QueryMngt() {
                         id="to"
                         value={selectedQuery.email} // Use the email from the selected query
                         readOnly // Make it read-only as it's derived from the selected query
+                      />
+                      <label htmlFor="subject" className="form-label">
+                        Subject:
+                      </label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        id="subject"
+                        value={replyForm.subject}
+                        onChange={(e) => setReplyForm({ ...replyForm, subject: e.target.value })}
+                        readOnly
                       />
                       <label htmlFor="body" className="form-label">
                         Message:
@@ -222,6 +280,7 @@ function QueryMngt() {
           </div>
         </div>
       </section>
+      <ToastContainer />
     </>
   );
 }
