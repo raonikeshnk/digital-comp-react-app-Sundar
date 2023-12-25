@@ -19,6 +19,8 @@ import TeamUpdate from './components/admin/TeamUpdate';
 import GalleryMngt from './components/admin/GalleryMngt';
 import AboutMngt from './components/admin/AboutMngt';
 import QueryMngt from './components/admin/QueryMngt';
+import CourseMngt from './components/admin/CourseMngt';
+import Addcourse from './components/admin/Addcourse';
 
 
 function App() {
@@ -44,6 +46,10 @@ function App() {
           <Route path="/gallerymngt"  element={<GalleryMngt />} />
           <Route path="/aboutmngt"  element={<AboutMngt />} />
           <Route path="/querymngt"  element={<QueryMngt />} />
+          <Route path="/coursemngt"  element={<CourseMngt />} />
+          <Route path="/addcourse"  element={<Addcourse />} />
+
+
 
 
 

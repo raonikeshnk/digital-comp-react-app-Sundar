@@ -1,4 +1,6 @@
   import React, { useState, useEffect } from 'react';
+  import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import Navbar from "./common/Navbar";
 import Left from "./common/Left";
 
@@ -94,6 +96,7 @@ function AboutMngt() {
       if (response.ok) {
         const data = await response.json();
         console.log('Data updated successfully:', data);
+        toast.success('About Content Updated successfully');
         setEditing(false);
         setOrder(data.order);
         setOrder1(data.order1);
@@ -243,6 +246,7 @@ function AboutMngt() {
           </div>
         </div>
       </section>
+      <ToastContainer/>
     </>
   );
 }

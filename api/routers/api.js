@@ -4,6 +4,7 @@ const teamc = require('../controllers/teamcontroller');
 const photoc = require('../controllers/photocontroller');
 const aboutc = require('../controllers/aboutcontroller');
 const queryc = require('../controllers/querycontroller');
+const coursec = require('../controllers/coursecontroller')
 const multer = require('multer');
 
 const storage = multer.diskStorage({

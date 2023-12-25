@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import Left from "./common/Left";
 import Navbar from "./common/Navbar";
 
@@ -50,6 +52,8 @@ function GalleryMngt() {
         console.log('Photos uploaded successfully');
         // Reload the gallery after upload
         fetchPhotos();
+        toast.success('photos successfully upload');
+
       } else {
         console.error('Error uploading photos:', data.error);
       }
@@ -174,6 +178,7 @@ function GalleryMngt() {
           </div>
         </div>
       </section>
+      <ToastContainer/>
     </>
   );
 }

@@ -8,6 +8,8 @@ function Left() {
 <Link  to='/gallerymngt'> <button className="btn btn-info form-control p-3 mb-2"> Gallery Management</button></Link>
 <Link  to='/aboutmngt'> <button className="btn btn-info form-control p-3 mb-2"> About Management</button></Link>
 <Link  to='/querymngt'> <button className="btn btn-info form-control p-3 mb-2"> Query Management</button></Link>
+<Link  to='/coursemngt'> <button className="btn btn-info form-control p-3 mb-2"> Course Management</button></Link>
+
 
 
 
