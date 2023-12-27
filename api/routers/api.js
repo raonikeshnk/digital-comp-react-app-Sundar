@@ -38,6 +38,8 @@ router.get('/getAllQueries', queryc.getAllQueries);
 router.post('/submitContactForm', queryc.submitContactForm);
 router.delete('/deleteQuery/:id', queryc.deleteQuery);
 router.post('/replyToQuery', queryc.replyToQuery);
+router.get('/courses', coursec.getAllCourses);
+router.post('/api/courses', upload.single('file'), coursec.addCourse);
 
 
 router.get('/about', aboutc.getAboutData);
