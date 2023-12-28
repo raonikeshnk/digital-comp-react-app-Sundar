@@ -38,10 +38,6 @@ router.get('/getAllQueries', queryc.getAllQueries);
 router.post('/submitContactForm', queryc.submitContactForm);
 router.delete('/deleteQuery/:id', queryc.deleteQuery);
 router.post('/replyToQuery', queryc.replyToQuery);
-router.get('/courses', coursec.getAllCourses);
-router.post('/api/courses', upload.single('file'), coursec.addCourse);
-
-
 router.get('/about', aboutc.getAboutData);
 router.put(
   '/updateabout',
@@ -52,5 +48,13 @@ router.put(
   ]),
   aboutc.updateAboutData
 );
+
+router.get('/courses', coursec.getAllCourses);
+router.post('/courses', upload.single('bannerImage'), coursec.addCourse);
+router.put('/courses/:id', upload.single('bannerImage'), coursec.updateCourse);
+router.delete('/courses/:id', coursec.deleteCourse);
+router.get('/courses/:id', coursec.getCourseById);
+
+
 
 module.exports = router;
