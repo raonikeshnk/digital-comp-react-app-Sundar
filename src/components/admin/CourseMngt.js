@@ -281,7 +281,7 @@ function CourseMngt() {
                   <tbody>
                     {Array.isArray(courses) && courses.length > 0 ? (
                       courses.map((course) => (
-                        <tr key={course._id}>
+                        <tr key={course._id} style={{fontSize:'5px' }}>
                           <td>{course.name}</td>
                           <td>
                             {course.bannerImage && (
