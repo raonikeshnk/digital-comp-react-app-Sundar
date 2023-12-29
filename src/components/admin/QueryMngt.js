@@ -160,7 +160,7 @@ function QueryMngt() {
                     Email sent successfully!
                   </div>
                 )}
-                {(!isReplyFormVisible) && (
+                {!isReplyFormVisible && queries.length > 0 ? (
                   <table className="table table-bordered">
                     <thead>
                       <tr>
@@ -205,8 +205,12 @@ function QueryMngt() {
                       ))}
                     </tbody>
                   </table>
+                ) : (
+                  <div className="alert alert-info text-center" role="alert">
+                    No records found.
+                  </div>
                 )}
-              </div>
+              </div>;
               {selectedQuery && isReplyFormVisible && (
                 <div className="mt-4">
                   <h3>Reply to Query</h3>

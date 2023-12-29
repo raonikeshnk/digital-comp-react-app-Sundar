@@ -69,8 +69,6 @@ function Courses() {
         <div className="container">
           <div className="row">
             {courses.map((course) => (
-
-
               <div className="col-12 col-sm-6 col-md-6 col-lg-4 mb-4 mb-lg-4">
                 <div className="custom-media">
                   <a href="#">
