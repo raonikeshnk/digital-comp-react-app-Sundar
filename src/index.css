@@ -67,3 +67,95 @@
   position: absolute;
   /* Add your dotted styling here */
 }
+
+
+/* Add your existing styles */
+
+/* Custom styles for Skills Covered */
+.skills-card {
+  border: 1px solid #dee2e6; /* Bootstrap border color */
+  border-radius: 10px;
+  margin-bottom: 20px;
+  background-color: #fff; /* Background color for the card */
+}
+
+.skills-card-header {
+  background-color: #f8f9fa; /* Bootstrap background color */
+  padding: 10px;
+  border-bottom: 1px solid #dee2e6; /* Bootstrap border color */
+  border-radius: 10px 10px 0 0;
+}
+
+.skills-card-body {
+  padding: 20px;
+}
+
+.skill-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.skill-item-icon {
+  font-size: 24px;
+  margin-right: 10px;
+}
+
+/* Custom styles for Course Syllabus */
+.syllabus-card {
+  border: 1px solid #dee2e6; /* Bootstrap border color */
+  border-radius: 10px;
+  margin-bottom: 20px;
+  background-color: #f8f9fa; /* Background color for the card */
+}
+
+.syllabus-card-header {
+  background-color: #343a40; /* Dark background color for the card header */
+  color: #fff; /* Text color for the card header */
+  padding: 10px;
+  border-bottom: 1px solid #dee2e6; /* Bootstrap border color */
+  border-radius: 10px 10px 0 0;
+}
+
+.syllabus-card-body {
+  padding: 20px;
+}
+
+.syllabus-module {
+  margin-bottom: 20px;
+}
+
+.syllabus-module-title {
+  color: #343a40; /* Text color for module titles */
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.syllabus-topic {
+  color: #555; /* Text color for topics */
+  margin-bottom: 5px;
+}
+
+/* Add more custom styles as needed */
+.hstack {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  align-self: stretch;
+  justify-content: center;
+  flex-wrap: wrap;
+  
+}
+.hstack div{
+  border-radius: 5px;
+  margin: 4px;
+  border: 1px solid gray;
+}
+
+
+.vstack {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  align-self: stretch;
+}
