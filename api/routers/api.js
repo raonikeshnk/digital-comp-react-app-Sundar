@@ -53,7 +53,7 @@ router.get('/courses', coursec.getAllCourses);
 router.post('/courses', upload.single('bannerImage'), coursec.addCourse);
 router.put('/courses/:id', upload.single('bannerImage'), coursec.updateCourse);
 router.delete('/courses/:id', coursec.deleteCourse);
-router.get('/courses/:id', coursec.getCourseById);
+router.get('/courses/:courseId', coursec.getCourseById);
 
 
 

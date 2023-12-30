@@ -71,9 +71,11 @@ exports.deleteCourse = async (req, res) => {
 
 exports.getCourseById = async (req, res) => {
   try {
-    const courseId = req.params.id;
+    const courseId = req.params.courseId;
     const course = await Course.findById(courseId);
+    console.log('Course id in controller :', req.params)
 
+    console.log('Course object in controller :', course)
     if (!course) {
       return res.status(404).json({ error: 'Course not found' });
     }

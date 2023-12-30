@@ -281,7 +281,7 @@ function CourseMngt() {
                   <tbody>
                     {Array.isArray(courses) && courses.length > 0 ? (
                       courses.map((course) => (
-                        <tr key={course._id} style={{fontSize:'5px' }}>
+                        <tr key={course._id} style={{fontSize:'13px' }}>
                           <td>{course.name}</td>
                           <td>
                             {course.bannerImage && (
@@ -317,7 +317,7 @@ function CourseMngt() {
                       ))
                     ) : (
                       <tr>
-                        <td colSpan="6"><h3 className='text-center'>No course found</h3></td>
+                        <td colSpan="8"><h3 className='text-center'>No course found</h3></td>
                       </tr>
                     )}
                   </tbody>

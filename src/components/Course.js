@@ -1,8 +1,32 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import Navbar from '../common/Navbar';
 import Footer from '../common/Footer';
 
+
 function Course() {
+    const { courseId } = useParams();
+    const [course, setCourse] = useState('');
+
+    useEffect(() => {
+        // Fetch course details using courseId
+        const fetchCourseDetails = async () => {
+            try {
+                console.log('Fetching course details for courseId:', courseId);
+                const response = await fetch(`../api/courses/${courseId}`); // Replace with your backend route
+                const data = await response.json();
+                setCourse(data);
+                console.log(data)
+            } catch (error) {
+                console.error('Error fetching course details:', error);
+            }
+        };
+
+        if (courseId) {
+            fetchCourseDetails();
+        }
+    }, [courseId]);
+
     return (
         <>
             <div className="site-mobile-menu">
@@ -28,7 +52,7 @@ function Course() {
                                         data-aos="fade-up"
                                         data-aos-delay={100}
                                     >
-                                        Full Stack Web Development
+                                        {course.name}
                                     </h1>
                                     <div className="row justify-content-between rounded bg-warning p-2 ">
                                         <div className="col-lg-4 p-4  bg-white shadow-lg gap-2">
@@ -66,11 +90,6 @@ function Course() {
 
                 </div>
             </div>
-
-
-
-
-
             <div className="untree_co-section bg-light">
                 <div className="container">
                     <div className="row justify-content-between">
@@ -101,8 +120,6 @@ function Course() {
                     </div>
                 </div>
             </div>
-
-
             <div className="untree_co-section">
                 <div className="container">
                     <h2 className="section-heading text-center line-bottom mb-4" data-aos="fade-up" data-aos-delay={0}>
@@ -196,8 +213,6 @@ function Course() {
                     </div>
                 </div>
             </div>
-
-
             <div className="untree_co-section bg-light">
                 <div className="container">
                     <h2 className="section-heading text-center line-bottom mb-4" data-aos="fade-up" data-aos-delay={0}>
@@ -216,7 +231,6 @@ function Course() {
                     </div>
                 </div>
             </div>
-
             <div className="untree_co-section">
                 <div className="container">
                     <h2 className="section-heading text-center line-bottom mb-4" data-aos="fade-up" data-aos-delay={0}>
@@ -330,11 +344,10 @@ function Course() {
                     </div>
                 </div>
             </div>
-
-
             <Footer />
         </>
     );
+
 }
 
 export default Course;

@@ -47,7 +47,7 @@ function App() {
           <Route path="/aboutmngt"  element={<AboutMngt />} />
           <Route path="/querymngt"  element={<QueryMngt />} />
           <Route path="/coursemngt"  element={<CourseMngt />} />
-          <Route path="/course" element={<Course />}/>
+          <Route path="/course/:courseId" element={<Course />} />
 
 
 
