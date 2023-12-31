@@ -13,7 +13,7 @@ exports.getAllCourses = async (req, res) => {
 
 exports.addCourse = async (req, res) => {
   try {
-    const { name, description, mDesc, duration, category } = req.body;
+    const { name, description, mDesc, duration, category, additionalCategories } = req.body;
 
     const newCourse = new Course({
       name,
@@ -21,6 +21,7 @@ exports.addCourse = async (req, res) => {
       mDesc,
       duration,
       category,
+      additionalCategories, // Add this line
       bannerImage: req.file.filename,
     });
 
@@ -35,7 +36,7 @@ exports.addCourse = async (req, res) => {
 exports.updateCourse = async (req, res) => {
   try {
     const courseId = req.params.id;
-    const { name, description, mDesc, duration, category } = req.body;
+    const { name, description, mDesc, duration, category, additionalCategories } = req.body;
     const bannerImage = req.file ? req.file.filename : undefined;
 
     const updatedCourse = await Course.findByIdAndUpdate(
@@ -46,7 +47,8 @@ exports.updateCourse = async (req, res) => {
         mDesc,
         duration,
         category,
-        bannerImage
+        additionalCategories, // Add this line
+        bannerImage,
       },
       { new: true }
     );
@@ -57,6 +59,7 @@ exports.updateCourse = async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 };
+
 
 exports.deleteCourse = async (req, res) => {
   try {

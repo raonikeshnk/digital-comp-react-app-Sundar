@@ -95,10 +95,10 @@ function Course() {
                     <div className="row justify-content-between">
                         <div className="col-lg-5">
                             <h2 className="line-bottom mb-4" data-aos="fade-up" data-aos-delay={0}>
-                                Why Choose MERN Stack Development Training Program
+                                Why Choose {course.name} Training Program
                             </h2>
                             <p data-aos="fade-up" data-aos-delay={100}>
-                                With Full Stack Development training, your value as a developer in the tech world grows manifold. With your competency in handling complete web development process in any organization, you become an inseparable asset to recruiters. There is only one language you need to learn to be able to work on these stacks and that is JAVASCRIPT. After having completed this training, you will be able to handle front end development, back end development, as well as everything associated with database aspects. The development process can be sped up with accurate skills.
+                            {course.mDesc}
                             </p>
                             <a
                                 href="tel:+919649911993"
@@ -112,7 +112,7 @@ function Course() {
                         <div className="col-lg-6" data-aos="fade-up" data-aos-delay={400}>
                             <div className="bg-1" />
                             <img
-                                src="images/about-us-video.png"
+                                src={course.bannerImage}
                                 alt="Image"
                                 className="img-fluid rounded"
                             />
@@ -220,13 +220,11 @@ function Course() {
                     </h2>
                     <p className="text-center">Enhance your skills with the following after completing this course</p>
                     <div class="hstack gap-4">
-                        <div class="px-4 py-3 bg-dark text-light text-uppercase">First item</div>
-                        <div class="px-4 py-3 bg-dark text-light text-uppercase">First item</div>
-                        <div class="px-4 py-3 bg-dark text-light text-uppercase">First item</div>
-                        <div class="px-4 py-3 bg-dark text-light text-uppercase">First item</div>
-                        <div class="px-4 py-3 bg-dark text-light text-uppercase">First item</div>
-
-
+                        <div class="px-4 py-3 bg-dark text-light text-uppercase">{course.additionalCategories}</div>
+                        <div class="px-4 py-3 bg-dark text-light text-uppercase">{course.additionalCategories}</div>
+                        <div class="px-4 py-3 bg-dark text-light text-uppercase">{course.additionalCategories}</div>
+                        <div class="px-4 py-3 bg-dark text-light text-uppercase">{course.additionalCategories}</div>
+                        <div class="px-4 py-3 bg-dark text-light text-uppercase">{course.additionalCategories}</div>
 
                     </div>
                 </div>

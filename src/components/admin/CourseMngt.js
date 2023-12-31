@@ -3,7 +3,7 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Left from './common/Left';
 import Navbar from './common/Navbar';
-import { confirmAlert } from 'react-confirm-alert'; 
+import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
 
 function CourseMngt() {
@@ -17,8 +17,8 @@ function CourseMngt() {
   const [selectedCourseId, setSelectedCourseId] = useState(null);
   const [showForm, setShowForm] = useState(false);
   const [showTable, setShowTable] = useState(true);
-
-
+  const [selectedCategories, setSelectedCategories] = useState([]); // Explicit declaration
+  const [courseselectedCategories, coursesetSelectedCategories] = useState([]);
 
   const fetchCourses = async () => {
     try {
@@ -41,6 +41,7 @@ function CourseMngt() {
       formData.append('duration', courseDuration);
       formData.append('category', courseCategory);
       formData.append('bannerImage', bannerImage);
+      formData.append('additionalCategories', selectedCategories);
 
       const url = selectedCourseId ? `/api/courses/${selectedCourseId}` : '/api/courses';
       const method = selectedCourseId ? 'PUT' : 'POST';
@@ -57,16 +58,13 @@ function CourseMngt() {
         setShowForm(false);
         setShowTable(true);
         toast.success('Course has been added successfully');
-      }
-      else {
+      } else {
         console.error('Failed to add/update course');
-        toast.error('Failed to add/update course'); 
-
+        toast.error('Failed to add/update course');
       }
     } catch (error) {
       console.error('Error:', error);
-      toast.error('Error adding/updating course'); 
-
+      toast.error('Error adding/updating course');
     }
   };
 
@@ -74,28 +72,27 @@ function CourseMngt() {
     setShowForm(!showForm);
     setShowTable(!showTable);
     clearFormFields();
-
-
   };
 
   const handleUpdateClick = async (courseId) => {
     console.log('Course ID:', courseId); // Add this line
     try {
       const response = await fetch(`/api/courses/${courseId}`);
-  
+
       if (response.ok) {
         const selectedCourse = await response.json();
-  
+
         setCourseName(selectedCourse.name);
         setCourseDescription(selectedCourse.description);
         setCourseMoreDetails(selectedCourse.mDesc);
         setCourseDuration(selectedCourse.duration);
         setCourseCategory(selectedCourse.category);
+        coursesetSelectedCategories(selectedCourse.additionalCategories)
         setSelectedCourseId(selectedCourse._id);
-  
+
         setShowForm(true);
         setShowTable(false);
-  
+
         toast.success('Course details loaded for update');
       } else {
         console.error(`Failed to fetch course details for update. Status: ${response.status}`);
@@ -106,14 +103,10 @@ function CourseMngt() {
       toast.error('Error updating course. Please try again.');
     }
   };
-  
-  
-  
-  
 
   const handleDeleteClick = async (courseId) => {
     try {
-     confirmAlert({
+      confirmAlert({
         title: 'Confirm Deletion',
         message: 'Are you sure you want to delete this course?',
         buttons: [
@@ -146,6 +139,17 @@ function CourseMngt() {
     }
   };
 
+  const handleCategoryChange = (e) => {
+    const category = e.target.value;
+    setSelectedCategories((prevCategories) => {
+      if (prevCategories.includes(category)) {
+        return prevCategories.filter((c) => c !== category);
+      } else {
+        return [...prevCategories, category];
+      }
+    });
+  };
+
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     setBannerImage(file);
@@ -164,7 +168,6 @@ function CourseMngt() {
   useEffect(() => {
     fetchCourses();
   }, [showForm]);
-
 
 
 
@@ -243,9 +246,6 @@ function CourseMngt() {
                       {/* Add more categories as needed */}
                     </select>
                   </div>
-
-
-
                   <div className="mb-3">
                     <label className="form-label">Course Banner Image:</label>
                     <input
@@ -255,6 +255,47 @@ function CourseMngt() {
                       accept="image/*"
                       required={!selectedCourseId} // Required for new course, optional for update
                     />
+                  </div>
+                  <div className="mb-3">
+                    <label className="form-label">Additional Categories:</label>
+                    <div className="d-flex flex-wrap">
+                      <div className="me-3 mb-2">
+                        <label className="mb-0">
+                          <input
+                            className='me-2'
+                            type="checkbox"
+                            value="box"
+                            checked={selectedCategories.includes("box")}
+                            onChange={handleCategoryChange}
+                          />
+                          Box
+                        </label>
+                      </div>
+                      <div className="me-3 mb-2">
+                        <label className="mb-0">
+                          <input
+                            className='me-2'
+                            type="checkbox"
+                            value="webdevelopment"
+                            checked={selectedCategories.includes("webdevelopment")}
+                            onChange={handleCategoryChange}
+                          />
+                          Web Development
+                        </label>
+                      </div>
+                      <div className="mb-2">
+                        <label className="mb-0">
+                          <input
+                            className='me-2'
+                            type="checkbox"
+                            value="marketing"
+                            checked={selectedCategories.includes("marketing")}
+                            onChange={handleCategoryChange}
+                          />
+                          Marketing
+                        </label>
+                      </div>
+                    </div>
                   </div>
 
 
@@ -274,14 +315,16 @@ function CourseMngt() {
                       <th>Course More Details</th>
                       <th>Course Duration</th>
                       <th>Course Category</th>
+                      <th>Additional<br></br> Categories</th> {/* Add this line */}
                       <th>Action 1</th>
                       <th>Action 2</th>
+                      <th> Action 3</th>
                     </tr>
                   </thead>
                   <tbody>
                     {Array.isArray(courses) && courses.length > 0 ? (
                       courses.map((course) => (
-                        <tr key={course._id} style={{fontSize:'13px' }}>
+                        <tr key={course._id} style={{ fontSize: '13px' }}>
                           <td>{course.name}</td>
                           <td>
                             {course.bannerImage && (
@@ -296,6 +339,11 @@ function CourseMngt() {
                           <td>{course.mDesc}</td>
                           <td>{course.duration}</td>
                           <td>{course.category}</td>
+                          <td>
+                            {Array.isArray(course.additionalCategories) && course.additionalCategories.length > 0
+                              ? course.additionalCategories.join(', ')
+                              : 'No additional categories'}
+                          </td> {/* Display additional categories */}
                           <td>
                             <button
                               onClick={() => handleUpdateClick(course._id)}
@@ -312,16 +360,19 @@ function CourseMngt() {
                               Delete
                             </button>
                           </td>
-
                         </tr>
                       ))
                     ) : (
                       <tr>
-                        <td colSpan="8"><h3 className='text-center'>No course found</h3></td>
+                        <td colSpan="8">
+                          <h3 className='text-center'>No course found</h3>
+                        </td>
                       </tr>
                     )}
                   </tbody>
                 </table>
+
+
               )}
             </div>
           </div>
